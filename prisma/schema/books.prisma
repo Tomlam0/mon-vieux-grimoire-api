@@ -1,0 +1,18 @@
+type BooksRatings {
+    id     String @map("_id") @db.ObjectId
+    grade  Int
+    userId String
+}
+
+model books {
+    id            String         @id @default(auto()) @map("_id") @db.ObjectId
+    v             Int            @map("__v")
+    author        String
+    averageRating Json
+    genre         String
+    imageUrl      String
+    ratings       BooksRatings[]
+    title         String
+    userId        String
+    year          Int
+}
