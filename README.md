@@ -51,7 +51,7 @@ pnpm prisma:generate:dev
 pnpm prisma:migrate:dev
 
 # Push the Prisma schema state to the database for development
-pnpm prisma:push
+pnpm prisma:push:dev
 
 # Seed the database for development
 pnpm prisma:seed:dev
@@ -70,6 +70,9 @@ pnpm prisma:generate:prod
 
 # Run Prisma migrations for production
 pnpm prisma:migrate:prod
+
+# Push the Prisma schema state to the database for production
+pnpm prisma:push:prod
 
 # Seed the database for production
 pnpm prisma:seed:prod
@@ -114,7 +117,15 @@ To generate the Prisma client based on the schema with package.json scripts
 pnpm prisma:generate:dev
 ```
 
-2. Start the server:
+2. Apply Schema Changes to the Database:
+
+Since migrations are not available for MongoDB, use the following command to apply the schema changes to the database
+
+```bash
+pnpm prisma:push:dev
+```
+
+3. Start the server:
 
 To generate the Prisma client based on the schema with package.json scripts
 

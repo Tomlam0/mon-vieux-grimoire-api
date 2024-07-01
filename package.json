@@ -9,15 +9,19 @@
     "build": "tsc -p tsconfig.json",
     "prisma:generate:dev": "dotenv -e .env.development -- pnpx prisma generate",
     "prisma:migrate:dev": "dotenv -e .env.development -- pnpx prisma migrate dev",
-    "prisma:push": "dotenv -e .env.development -- pnpx prisma db push",
+    "prisma:push:dev": "dotenv -e .env.development -- pnpx prisma db push",
     "prisma:seed:dev": "dotenv -e .env.development -- pnpx prisma db seed",
     "prisma:reset:dev": "dotenv -e .env.development -- pnpx prisma migrate reset --skip-seed",
     "prisma:studio:dev": "dotenv -e .env.development -- pnpx prisma studio --browser none",
     "prisma:update:dev": "pnpm run prisma:generate:dev && pnpm run prisma:push && pnpm run prisma:studio:dev",
     "prisma:generate:prod": "dotenv -e .env.production -- pnpx prisma generate",
     "prisma:migrate:prod": "dotenv -e .env.production -- pnpx prisma migrate deploy",
+    "prisma:push:prod": "dotenv -e .env.production -- pnpx prisma db push",
     "prisma:seed:prod": "dotenv -e .env.production -- pnpx prisma db seed",
     "prisma:studio:prod": "dotenv -e .env.production -- pnpx prisma studio --browser none"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.600.0",
