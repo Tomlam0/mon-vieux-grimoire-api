@@ -10,7 +10,6 @@
     "prisma:generate:dev": "dotenv -e .env.development -- pnpx prisma generate",
     "prisma:migrate:dev": "dotenv -e .env.development -- pnpx prisma migrate dev",
     "prisma:push": "dotenv -e .env.development -- pnpx prisma db push",
-    "prisma:pull": "dotenv -e .env.development -- pnpx prisma db pull",
     "prisma:seed:dev": "dotenv -e .env.development -- pnpx prisma db seed",
     "prisma:reset:dev": "dotenv -e .env.development -- pnpx prisma migrate reset --skip-seed",
     "prisma:studio:dev": "dotenv -e .env.development -- pnpx prisma studio --browser none",
