@@ -1,8 +1,10 @@
 import Fastify, { FastifyError, FastifyInstance } from "fastify";
+import { ZodTypeProvider } from "fastify-type-provider-zod";
 import fastifyEnv from "@fastify/env";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyCors from "@fastify/cors";
 import fastifyCompress from "@fastify/compress";
+import rateLimit from "@fastify/rate-limit";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 
@@ -28,13 +30,19 @@ dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 const prisma = new PrismaClient();
 
 const main = async (): Promise<FastifyInstance> => {
-  const app = Fastify({ logger: loggerConfig });
+  const app = Fastify({
+    logger: loggerConfig,
+  }).withTypeProvider<ZodTypeProvider>();
 
   // Register plugins in order
   await app.register(fastifyEnv, envConfig);
   await app.register(fastifyHelmet, { global: true }); // Security applied on all routes
   await app.register(fastifyCors, corsConfig);
   await app.register(fastifyCompress);
+  await app.register(rateLimit, {
+    max: 100,
+    timeWindow: "1 minute",
+  }); // Register global rate limit for bots and DDoS protection
 
   // Check database connection, need to prisma generate before
   try {
@@ -56,8 +64,18 @@ const main = async (): Promise<FastifyInstance> => {
 
   // Global error handler
   app.setErrorHandler((error: FastifyError, req, res) => {
-    app.log.error(error);
-    res.status(500).send({ error: "An error has occurred" });
+    if (error.statusCode === 429) {
+      // Change message from rate limit error
+      res.code(429).send({
+        statusCode: 429,
+        error: "Trop de requêtes",
+        message:
+          "Vous avez atteint la limite de requêtes ! Veuillez réessayer dans 1 minute.",
+      });
+    } else {
+      app.log.error(error);
+      res.status(500).send({ error: "Une erreur est survenue" });
+    }
   });
 
   return app;
