@@ -23,11 +23,12 @@ This project is a backend for the "Mon Vieux Grimoire" application.
 ## Project Structure
 
 ```bash
-├── api/                         # Contains files for serverless functions for connecting to Vercel.
+├── api/                         # Contains file for serverless functions for connecting to Vercel.
 ├── prisma/                      # Contains Prisma files, such as schemas and seed scripts.
 ├── src/
 │   ├── config/                  # Configuration, such as CORS and environment variables.
 │   ├── controllers/             # Contains controllers to handle requests and business logic.
+│   ├── lib/                     # Contains modules used in the application like Prisma client.
 │   ├── plugins/                 # Plugins to extend Fastify's functionality.
 │   ├── routes/                  # Defines the application's routes.
 │   ├── schema/                  # Contains Zod schemas for request validation and typing.

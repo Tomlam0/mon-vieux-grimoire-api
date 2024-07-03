@@ -6,7 +6,6 @@ type BooksRatings {
 
 model books {
     id            String         @id @default(auto()) @map("_id") @db.ObjectId
-    v             Int            @map("__v")
     author        String
     averageRating Json
     genre         String
@@ -15,4 +14,5 @@ model books {
     title         String
     userId        String
     year          Int
+    v             Int?           @map("__v")
 }

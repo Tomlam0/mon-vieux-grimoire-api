@@ -1,6 +1,10 @@
-import { z } from "zod";
+import { z, TypeOf } from "zod";
 
-// Create a new user account
+/**
+ * ========================================
+ *            Signup schema
+ * ========================================
+ */
 export const signupSchema = z.object({
   body: z.object({
     email: z.string().email({
@@ -30,7 +34,11 @@ export const signupSchema = z.object({
   }),
 });
 
-// Log to an user account
+/**
+ * ========================================
+ *            Login schema
+ * ========================================
+ */
 export const loginSchema = z.object({
   body: z.object({
     email: z.string().email({
@@ -43,3 +51,7 @@ export const loginSchema = z.object({
     }),
   }),
 });
+
+// Infer types for controllers
+export type SignupRequest = TypeOf<typeof signupSchema>["body"];
+export type LoginRequest = TypeOf<typeof loginSchema>["body"];

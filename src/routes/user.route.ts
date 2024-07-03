@@ -5,7 +5,11 @@ import { signupSchema, loginSchema } from "@schema/user.schema";
 import { userRateLimitOptions } from "@config/ratelimit.config";
 
 export default async function userRoutes(app: FastifyInstance) {
-  // Create a new user account
+  /**
+   * ========================================
+   *            Signup Route
+   * ========================================
+   */
   app.post("/signup", {
     schema: {
       body: signupSchema.shape.body,
@@ -16,7 +20,11 @@ export default async function userRoutes(app: FastifyInstance) {
     },
   });
 
-  // Log to an user account
+  /**
+   * ========================================
+   *            Login Route
+   * ========================================
+   */
   app.post("/login", {
     schema: {
       body: loginSchema.shape.body,

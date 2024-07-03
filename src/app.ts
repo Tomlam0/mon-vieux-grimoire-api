@@ -10,12 +10,11 @@ import fastifyHelmet from "@fastify/helmet";
 import fastifyCors from "@fastify/cors";
 import fastifyCompress from "@fastify/compress";
 import rateLimit from "@fastify/rate-limit";
-import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
+// import fastifySwagger from "@fastify/swagger";
+// import fastifySwaggerUi from "@fastify/swagger-ui";
 
 import dotenv from "dotenv";
 import path from "path";
-import { PrismaClient } from "@prisma/client";
 
 import envConfig from "@config/env.config";
 import corsConfig from "@config/cors.config";
@@ -32,8 +31,11 @@ const envFile =
     : ".env.development";
 dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 
-const prisma = new PrismaClient();
-
+/**
+ * ========================================
+ *            App
+ * ========================================
+ */
 const main = async (): Promise<FastifyInstance> => {
   const app = Fastify({
     logger: loggerConfig,
@@ -53,25 +55,11 @@ const main = async (): Promise<FastifyInstance> => {
     timeWindow: "1 minute",
   }); // Register global rate limit for bots and DDoS protection
 
-  // Check database connection, need to prisma generate before
-  try {
-    await prisma.$connect();
-    app.log.info("Prisma connected successfully to the database");
-  } catch (err) {
-    app.log.info("Prisma connection failed");
-    app.log.error(err);
-
-    process.exit(1);
-  }
-
   // Register API routes
   app.register(bookRoutes, { prefix: "/api/books" });
   app.register(userRoutes, { prefix: "/api/auth" });
 
-  // Add Prisma client to the global app requests
-  app.decorate("prisma", prisma);
-
-  // Global error handler
+  // Global errors handler
   app.setErrorHandler((error: FastifyError, req, res) => {
     // Change message from rate limit error
     if (error.statusCode === 429) {
@@ -83,13 +71,11 @@ const main = async (): Promise<FastifyInstance> => {
       });
       return;
     }
-
-    // Zod error handler
+    // Zod errors handler
     try {
       const validationError = fromError(error);
       res.status(400).send(validationError);
     } catch {
-      // Gestion des autres erreurs
       app.log.error(error);
       res.status(500).send({ error: "Une erreur est survenue" });
     }
