@@ -1,5 +1,5 @@
 {
-  "watch": ["src", ".env"],
+  "watch": ["src", ".env.development", ".env.production"],
   "ext": "js,ts,json",
   "ignore": ["node_modules", "dist", ".git"],
   "exec": "ts-node -r tsconfig-paths/register --transpile-only src/server.ts"

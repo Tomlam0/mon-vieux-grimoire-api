@@ -1,5 +1,10 @@
 import Fastify, { FastifyError, FastifyInstance } from "fastify";
-import { ZodTypeProvider } from "fastify-type-provider-zod";
+import {
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider,
+} from "fastify-type-provider-zod";
+import { fromError } from "zod-validation-error";
 import fastifyEnv from "@fastify/env";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyCors from "@fastify/cors";
@@ -34,6 +39,10 @@ const main = async (): Promise<FastifyInstance> => {
     logger: loggerConfig,
   }).withTypeProvider<ZodTypeProvider>();
 
+  // Configure zod type provider
+  app.setValidatorCompiler(validatorCompiler);
+  app.setSerializerCompiler(serializerCompiler);
+
   // Register plugins in order
   await app.register(fastifyEnv, envConfig);
   await app.register(fastifyHelmet, { global: true }); // Security applied on all routes
@@ -64,15 +73,23 @@ const main = async (): Promise<FastifyInstance> => {
 
   // Global error handler
   app.setErrorHandler((error: FastifyError, req, res) => {
+    // Change message from rate limit error
     if (error.statusCode === 429) {
-      // Change message from rate limit error
       res.code(429).send({
         statusCode: 429,
         error: "Trop de requêtes",
         message:
           "Vous avez atteint la limite de requêtes ! Veuillez réessayer dans 1 minute.",
       });
-    } else {
+      return;
+    }
+
+    // Zod error handler
+    try {
+      const validationError = fromError(error);
+      res.status(400).send(validationError);
+    } catch {
+      // Gestion des autres erreurs
       app.log.error(error);
       res.status(500).send({ error: "Une erreur est survenue" });
     }

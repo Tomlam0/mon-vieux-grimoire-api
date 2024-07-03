@@ -1,19 +1,29 @@
 import { FastifyInstance } from "fastify";
+
 import { signup, login } from "@controllers/user.controller";
 import { signupSchema, loginSchema } from "@schema/user.schema";
+import { userRateLimitOptions } from "@config/ratelimit.config";
 
-const userRoutes = async (app: FastifyInstance) => {
+export default async function userRoutes(app: FastifyInstance) {
   // Create a new user account
   app.post("/signup", {
-    schema: signupSchema,
+    schema: {
+      body: signupSchema.shape.body,
+    },
     handler: signup,
+    config: {
+      rateLimit: userRateLimitOptions.signup,
+    },
   });
 
   // Log to an user account
   app.post("/login", {
-    schema: loginSchema,
+    schema: {
+      body: loginSchema.shape.body,
+    },
     handler: login,
+    config: {
+      rateLimit: userRateLimitOptions.login,
+    },
   });
-};
-
-export default userRoutes;
+}
