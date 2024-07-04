@@ -16,7 +16,7 @@ export const signup = async (req: FastifyRequest, res: FastifyReply) => {
     // Hash the password
     const hash = await bcrypt.hash(password, 10);
 
-    await prisma.users.create({
+    await prisma.user.create({
       data: {
         email,
         password: hash,

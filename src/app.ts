@@ -55,7 +55,11 @@ const main = async (): Promise<FastifyInstance> => {
     timeWindow: "1 minute",
   }); // Register global rate limit for bots and DDoS protection
 
-  // Register API routes
+  /**
+   * ========================================
+   *            Routes
+   * ========================================
+   */
   app.register(bookRoutes, { prefix: "/api/books" });
   app.register(userRoutes, { prefix: "/api/auth" });
 

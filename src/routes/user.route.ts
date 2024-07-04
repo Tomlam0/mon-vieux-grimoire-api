@@ -17,7 +17,7 @@ export default async function userRoutes(app: FastifyInstance) {
     handler: signup,
     config: {
       rateLimit: userRateLimitOptions.signup,
-    },
+    }
   });
 
   /**
