@@ -1,41 +1,25 @@
 import { FastifyEnvOptions } from "@fastify/env";
+import { z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
 
-const schema = {
-  type: "object",
-  required: ["PORT", "DATABASE_URL", "JWT_SECRET_KEY"],
-  properties: {
-    PORT: {
-      type: "number",
-      default: 4000,
-    },
+const envSchema = z.object({
+  PORT: z.number().default(4000),
+  ORIGIN: z.string(),
+  CREDENTIALS: z.boolean(),
+  DATABASE_URL: z.string(),
+  JWT_SECRET_KEY: z.string(),
+  // ENABLE_SWAGGER: z.boolean().optional().default(true),
+});
 
-    // CORS
-    ORIGIN: {
-      type: "string",
-    },
-    CREDENTIALS: {
-      type: "boolean",
-    },
+type EnvSchema = z.infer<typeof envSchema>;
 
-    DATABASE_URL: {
-      type: "string",
-    },
-
-    JWT_SECRET_KEY: {
-      type: "string",
-    },
-
-    // ENABLE_SWAGGER: {
-    //   type: "boolean",
-    //   default: true,
-    // },
-  },
-};
+// Convert the Zod schema to JSON Schema format for compatibility with Fastify plugins
+const envJsonSchema = zodToJsonSchema(envSchema, "envSchema");
 
 const envConfig: FastifyEnvOptions = {
   confKey: "config",
-  schema,
+  schema: envJsonSchema,
   dotenv: true,
 };
 
-export default envConfig;
+export { envSchema, EnvSchema, envConfig };

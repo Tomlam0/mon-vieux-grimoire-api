@@ -12,14 +12,15 @@ import fastifyCompress from "@fastify/compress";
 import rateLimit from "@fastify/rate-limit";
 // import fastifySwagger from "@fastify/swagger";
 // import fastifySwaggerUi from "@fastify/swagger-ui";
-
 import dotenv from "dotenv";
 import path from "path";
 
-import envConfig from "@config/env.config";
+import { envConfig } from "@config/env.config";
 import corsConfig from "@config/cors.config";
 import loggerConfig from "@config/logger.config";
 // import { swaggerConfig } from "@config/swagger.config";
+
+import auth from "@plugins/auth";
 
 import bookRoutes from "@routes/book.route";
 import userRoutes from "@routes/user.route";
@@ -53,7 +54,8 @@ const main = async (): Promise<FastifyInstance> => {
   await app.register(rateLimit, {
     max: 100,
     timeWindow: "1 minute",
-  }); // Register global rate limit for bots and DDoS protection
+  }); // Register global rate limit for bots and DDoS protection;
+  await app.register(auth);
 
   /**
    * ========================================
@@ -63,7 +65,11 @@ const main = async (): Promise<FastifyInstance> => {
   app.register(bookRoutes, { prefix: "/api/books" });
   app.register(userRoutes, { prefix: "/api/auth" });
 
-  // Global errors handler
+  /**
+   * ========================================
+   *            Error handler
+   * ========================================
+   */
   app.setErrorHandler((error: FastifyError, req, res) => {
     // Change message from rate limit error
     if (error.statusCode === 429) {

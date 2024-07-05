@@ -39,9 +39,11 @@
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.2",
     "fastify": "^4.28.0",
+    "fastify-plugin": "^4.5.1",
     "fastify-type-provider-zod": "^2.0.0",
     "sharp": "^0.32.6",
     "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.1",
     "zod-validation-error": "^3.3.0"
   },
   "devDependencies": {

@@ -1,12 +1,12 @@
 type BookRating {
-    id     String @map("_id") @db.ObjectId
+    id    String @map("_id") @db.ObjectId
+    grade Int
+
     userId String
-    grade  Int
 }
 
 model Book {
     id            String       @id @default(auto()) @map("_id") @db.ObjectId
-    userId        String
     title         String
     author        String
     genre         String
@@ -14,4 +14,8 @@ model Book {
     imageUrl      String
     ratings       BookRating[]
     averageRating Json
+
+    // Each book is added by a user
+    user   User   @relation(fields: [userId], references: [id])
+    userId String @map("user") @db.ObjectId
 }

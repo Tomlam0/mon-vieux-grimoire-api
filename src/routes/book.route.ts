@@ -16,13 +16,13 @@ const bookRoutes = async (app: FastifyInstance) => {
 
   app.get("/bestrating", getBestBook);
 
-  app.post("/:id/rating", rateBook);
+  app.post("/:id/rating", { preValidation: [app.auth] }, rateBook);
 
-  app.post("/", createBook);
+  app.post("/", { preValidation: [app.auth] }, createBook);
 
-  app.put("/:id", updateBook);
+  app.put("/:id", { preValidation: [app.auth] }, updateBook);
 
-  app.delete("/:id", deleteBook);
+  app.delete("/:id", { preValidation: [app.auth] }, deleteBook);
 };
 
 export default bookRoutes;
