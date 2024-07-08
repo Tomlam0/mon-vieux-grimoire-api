@@ -10,6 +10,7 @@ import fastifyHelmet from "@fastify/helmet";
 import fastifyCors from "@fastify/cors";
 import fastifyCompress from "@fastify/compress";
 import rateLimit from "@fastify/rate-limit";
+import fastifyCookie from "@fastify/cookie";
 // import fastifySwagger from "@fastify/swagger";
 // import fastifySwaggerUi from "@fastify/swagger-ui";
 import dotenv from "dotenv";
@@ -55,6 +56,7 @@ const main = async (): Promise<FastifyInstance> => {
     max: 100,
     timeWindow: "1 minute",
   }); // Register global rate limit for bots and DDoS protection;
+  await app.register(fastifyCookie);
   await app.register(auth);
 
   /**

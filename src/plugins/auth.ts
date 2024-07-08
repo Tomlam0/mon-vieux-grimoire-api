@@ -9,7 +9,14 @@ const auth = async (app: FastifyInstance) => {
 
   app.decorate("auth", async (req: FastifyRequest, res: FastifyReply) => {
     try {
-      await req.jwtVerify();
+      const token = req.cookies.authToken;
+
+      if (!token) throw new Error("Aucun token fourni");
+
+      const decoded = await app.jwt.verify(token);
+
+      // Token is now linked to requests
+      req.user = decoded;
     } catch (err) {
       res.status(401).send({
         statusCode: 401,

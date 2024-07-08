@@ -67,9 +67,16 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
     // Generate JWT
     const token = req.server.jwt.sign({ userId: user.id }, { expiresIn: "4h" });
 
+    // Set HttpOnly cookie to avoid XSS attack
+    res.setCookie("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Ensure secure flag is set in production
+      maxAge: 4 * 60 * 60, // 4 hours
+      path: "/",
+    });
+
     res.status(200).send({
       userId: user.id,
-      token,
     });
   } catch (error: any) {
     res.status(500).send({ error: error.message });
