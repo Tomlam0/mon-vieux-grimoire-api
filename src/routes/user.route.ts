@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 
-import { signup, login } from "@controllers/user.controller";
+import { signup, login, logout } from "@controllers/user/index.user";
 import { signupSchema, loginSchema } from "@schema/user.schema";
 import { userRateLimitOptions } from "@config/ratelimit.config";
 
@@ -17,7 +17,7 @@ export default async function userRoutes(app: FastifyInstance) {
     handler: signup,
     config: {
       rateLimit: userRateLimitOptions.signup,
-    }
+    },
   });
 
   /**
@@ -33,5 +33,16 @@ export default async function userRoutes(app: FastifyInstance) {
     config: {
       rateLimit: userRateLimitOptions.login,
     },
+  });
+
+  // JWT is set on a cookie so we need to delete the cookie from backend on user logout
+  /**
+   * ========================================
+   *            Logout Route
+   * ========================================
+   */
+  app.post("/logout", {
+    preValidation: [app.auth],
+    handler: logout,
   });
 }

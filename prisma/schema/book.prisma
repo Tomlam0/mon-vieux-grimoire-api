@@ -2,7 +2,7 @@ type BookRating {
     id    String @map("_id") @db.ObjectId
     grade Int
 
-    userId String
+    userId String @db.ObjectId
 }
 
 model Book {
@@ -17,5 +17,5 @@ model Book {
 
     // Each book is added by a user
     user   User   @relation(fields: [userId], references: [id])
-    userId String @map("user") @db.ObjectId
+    userId String @db.ObjectId
 }

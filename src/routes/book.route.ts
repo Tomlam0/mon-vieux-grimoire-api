@@ -7,22 +7,36 @@ import {
   createBook,
   updateBook,
   deleteBook,
-} from "@controllers/book.controller";
+} from "@controllers/book/index.book";
+import { bookArraySchema } from "@schema/book.schema";
 
 const bookRoutes = async (app: FastifyInstance) => {
   /**
    * ========================================
-   *        Display books
+   *        Display all books
    * ========================================
    */
+  app.get("/", {
+    schema: {
+      response: {
+        200: bookArraySchema,
+      },
+    },
+    handler: getAllBooks,
+  });
 
-  // Display all books
-  app.get("/", getAllBooks);
-
-  // Display specific book
+  /**
+   * ========================================
+   *        Display a specific book
+   * ========================================
+   */
   app.get("/:id", getOneBook);
 
-  // Display only best books
+  /**
+   * ========================================
+   *        Display only best books
+   * ========================================
+   */
   app.get("/bestrating", getBestBook);
 
   /**
@@ -30,7 +44,6 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Add a new book
    * ========================================
    */
-
   app.post("/", { preValidation: [app.auth] }, createBook);
 
   /**
@@ -38,7 +51,6 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Add a new rating
    * ========================================
    */
-
   app.post("/:id/rating", { preValidation: [app.auth] }, rateBook);
 
   /**
@@ -46,7 +58,6 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Modify book informations
    * ========================================
    */
-
   app.put("/:id", { preValidation: [app.auth] }, updateBook);
 
   /**
@@ -54,7 +65,6 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Delete a book
    * ========================================
    */
-
   app.delete("/:id", { preValidation: [app.auth] }, deleteBook);
 };
 

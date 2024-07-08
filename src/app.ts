@@ -51,7 +51,6 @@ const main = async (): Promise<FastifyInstance> => {
   await app.register(fastifyEnv, envConfig);
   await app.register(fastifyHelmet, { global: true }); // Security applied on all routes
   await app.register(fastifyCors, corsConfig);
-  await app.register(fastifyCompress);
   await app.register(rateLimit, {
     max: 100,
     timeWindow: "1 minute",
@@ -65,7 +64,12 @@ const main = async (): Promise<FastifyInstance> => {
    * ========================================
    */
   app.register(bookRoutes, { prefix: "/api/books" });
-  app.register(userRoutes, { prefix: "/api/auth" });
+  // Register user routes with compression
+  app.register(async (app) => {
+    await app.register(fastifyCompress);
+
+    app.register(userRoutes, { prefix: "/api/auth" });
+  });
 
   /**
    * ========================================
