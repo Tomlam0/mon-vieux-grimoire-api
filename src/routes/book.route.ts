@@ -2,13 +2,13 @@ import { FastifyInstance } from "fastify";
 import {
   getAllBooks,
   getOneBook,
-  getBestBook,
+  getBestBooks,
   rateBook,
   createBook,
   updateBook,
   deleteBook,
 } from "@controllers/book/index.book";
-import { bookArraySchema } from "@schema/book.schema";
+import { bookSchema, bookArraySchema } from "@schema/book.schema";
 
 const bookRoutes = async (app: FastifyInstance) => {
   /**
@@ -30,14 +30,28 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Display a specific book
    * ========================================
    */
-  app.get("/:id", getOneBook);
+  app.get("/:id", {
+    schema: {
+      response: {
+        200: bookSchema,
+      },
+    },
+    handler: getOneBook,
+  });
 
   /**
    * ========================================
-   *        Display only best books
+   *        Display the 3 best books
    * ========================================
    */
-  app.get("/bestrating", getBestBook);
+  app.get("/bestrating", {
+    schema: {
+      response: {
+        200: bookArraySchema,
+      },
+    },
+    handler: getBestBooks,
+  });
 
   /**
    * ========================================

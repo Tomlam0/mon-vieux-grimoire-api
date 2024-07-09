@@ -4,7 +4,20 @@ import prisma from "../../lib/prisma";
 
 /**
  * ========================================
- *        Display only best books
+ *        Display the 3 best books
  * ========================================
  */
-export const getBestBook = async (req: FastifyRequest, res: FastifyReply) => {};
+export const getBestBooks = async (req: FastifyRequest, res: FastifyReply) => {
+  try {
+    const books = await prisma.book.findMany({
+      orderBy: {
+        averageRating: "desc",
+      },
+      take: 3,
+    });
+
+    res.status(200).send(books);
+  } catch (error: any) {
+    res.status(500).send({ error: error.message });
+  }
+};
