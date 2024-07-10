@@ -1,8 +1,8 @@
-import { FastifyRequest, FastifyReply } from "fastify";
-import bcrypt from "bcrypt";
+import { FastifyRequest, FastifyReply } from 'fastify';
+import bcrypt from 'bcrypt';
 
-import prisma from "../../lib/prisma";
-import { LoginRequest } from "../../schema/user.schema";
+import prisma from '../../lib/prisma';
+import { LoginRequest } from '@schema/user.schema';
 
 /**
  * ========================================
@@ -21,7 +21,7 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
     // Verify if user exist on db
     if (!user) {
       return res.status(401).send({
-        message: "Paire identifiant / mot de passe incorrect",
+        message: 'Paire identifiant / mot de passe incorrect',
       });
     }
 
@@ -30,19 +30,19 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
 
     if (!valid) {
       return res.status(401).send({
-        message: "Paire identifiant / mot de passe incorrect",
+        message: 'Paire identifiant / mot de passe incorrect',
       });
     }
 
-    // Generate JWT
-    const token = req.server.jwt.sign({ userId: user.id }, { expiresIn: "4h" });
+    // Generate JWT with userId in payload
+    const token = req.server.jwt.sign({ userId: user.id }, { expiresIn: '4h' });
 
-    res.setCookie("authToken", token, {
-      httpOnly: true, // Set HttpOnly cookie to avoid XSS attack
-      sameSite: "lax", // Protect against CSRF
-      secure: process.env.NODE_ENV === "production", // Ensure secure flag is set in production
+    res.setCookie('authToken', token, {
+      httpOnly: true, // Set httpOnly cookie to avoid XSS attack
+      sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none', // Protect against CSRF
+      secure: process.env.NODE_ENV === 'production', // Ensure secure flag is set in production
       maxAge: 4 * 60 * 60, // 4 hours
-      path: "/",
+      path: '/',
     });
 
     res.status(200).send({

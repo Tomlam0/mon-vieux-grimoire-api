@@ -7,3 +7,18 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+generator zod {
+  provider = "zod-prisma-types"
+  output   = "../../src/schema/zod"
+
+  useMultipleFiles = true //Generate folder for each model
+  writeBarrelFiles = true //Generate index for each folder
+
+  createModelTypes = true // Generate model types
+  createInputTypes = true // Generate input types
+
+  addInputTypeValidation = false // Add validation to the generated input types
+  addIncludeType         = false // Add include types for Prisma relations
+  addSelectType          = false // Add select types for Prisma relations
+}

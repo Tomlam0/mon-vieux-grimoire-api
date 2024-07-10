@@ -1,4 +1,5 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance } from 'fastify';
+
 import {
   getAllBooks,
   getOneBook,
@@ -7,8 +8,8 @@ import {
   createBook,
   updateBook,
   deleteBook,
-} from "@controllers/book/index.book";
-import { bookSchema, bookArraySchema } from "@schema/book.schema";
+} from '@controllers/book/index.book';
+import { BookSchema, BookArraySchema } from '@schema/book.schema';
 
 const bookRoutes = async (app: FastifyInstance) => {
   /**
@@ -16,10 +17,10 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Display all books
    * ========================================
    */
-  app.get("/", {
+  app.get('/', {
     schema: {
       response: {
-        200: bookArraySchema,
+        200: BookArraySchema,
       },
     },
     handler: getAllBooks,
@@ -30,10 +31,10 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Display a specific book
    * ========================================
    */
-  app.get("/:id", {
+  app.get('/:id', {
     schema: {
       response: {
-        200: bookSchema,
+        200: BookSchema,
       },
     },
     handler: getOneBook,
@@ -44,10 +45,10 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Display the 3 best books
    * ========================================
    */
-  app.get("/bestrating", {
+  app.get('/bestrating', {
     schema: {
       response: {
-        200: bookArraySchema,
+        200: BookArraySchema,
       },
     },
     handler: getBestBooks,
@@ -58,28 +59,52 @@ const bookRoutes = async (app: FastifyInstance) => {
    *        Add a new book
    * ========================================
    */
-  app.post("/", { preValidation: [app.auth] }, createBook);
+  app.post('/', {
+    preValidation: [app.auth],
+    schema: {
+      body: BookSchema,
+    },
+    handler: createBook,
+  });
 
   /**
    * ========================================
    *        Add a new rating
    * ========================================
    */
-  app.post("/:id/rating", { preValidation: [app.auth] }, rateBook);
+  app.post('/:id/rating', {
+    preValidation: [app.auth],
+    schema: {
+      body: BookSchema,
+    },
+    handler: rateBook,
+  });
 
   /**
    * ========================================
    *        Modify book informations
    * ========================================
    */
-  app.put("/:id", { preValidation: [app.auth] }, updateBook);
+  app.put('/:id', {
+    preValidation: [app.auth],
+    schema: {
+      body: BookSchema,
+    },
+    handler: updateBook,
+  });
 
   /**
    * ========================================
    *        Delete a book
    * ========================================
    */
-  app.delete("/:id", { preValidation: [app.auth] }, deleteBook);
+  app.delete('/:id', {
+    preValidation: [app.auth],
+    schema: {
+      body: BookSchema,
+    },
+    handler: deleteBook,
+  });
 };
 
 export default bookRoutes;

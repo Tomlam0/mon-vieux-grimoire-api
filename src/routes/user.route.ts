@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 
 import { signup, login, logout } from "@controllers/user/index.user";
-import { signupSchema, loginSchema } from "@schema/user.schema";
+import { SignupSchema, LoginSchema } from "@schema/user.schema";
 import { userRateLimitOptions } from "@config/ratelimit.config";
 
 export default async function userRoutes(app: FastifyInstance) {
@@ -12,7 +12,7 @@ export default async function userRoutes(app: FastifyInstance) {
    */
   app.post("/signup", {
     schema: {
-      body: signupSchema.shape.body,
+      body: SignupSchema.shape.body,
     },
     handler: signup,
     config: {
@@ -27,7 +27,7 @@ export default async function userRoutes(app: FastifyInstance) {
    */
   app.post("/login", {
     schema: {
-      body: loginSchema.shape.body,
+      body: LoginSchema.shape.body,
     },
     handler: login,
     config: {

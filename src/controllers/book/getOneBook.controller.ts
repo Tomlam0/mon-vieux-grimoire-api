@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 
 import prisma from "../../lib/prisma";
-import { Book } from "@schema/book.schema";
+import { Book } from "@schema/zod/index";
 
 type GetOneBookParams = {
   id: Book["id"];

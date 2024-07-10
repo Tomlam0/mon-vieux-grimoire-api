@@ -1,6 +1,6 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyRequest, FastifyReply } from 'fastify';
 
-import prisma from "../../lib/prisma";
+import prisma from '../../lib/prisma';
 
 /**
  * ========================================
@@ -11,7 +11,7 @@ export const getBestBooks = async (req: FastifyRequest, res: FastifyReply) => {
   try {
     const books = await prisma.book.findMany({
       orderBy: {
-        averageRating: "desc",
+        averageRating: 'desc',
       },
       take: 3,
     });

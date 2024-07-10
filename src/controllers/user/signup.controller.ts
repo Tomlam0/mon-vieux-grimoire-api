@@ -1,8 +1,8 @@
-import { FastifyRequest, FastifyReply } from "fastify";
-import bcrypt from "bcrypt";
+import { FastifyRequest, FastifyReply } from 'fastify';
+import bcrypt from 'bcrypt';
 
-import prisma from "../../lib/prisma";
-import { SignupRequest } from "../../schema/user.schema";
+import prisma from '../../lib/prisma';
+import { SignupRequest } from '@schema/user.schema';
 
 /**
  * ========================================
@@ -23,10 +23,10 @@ export const signup = async (req: FastifyRequest, res: FastifyReply) => {
       },
     });
 
-    res.status(201).send({ message: "Utilisateur créé !" });
+    res.status(201).send({ message: 'Utilisateur créé !' });
   } catch (error: any) {
     // Email unicity error handler
-    if (error.code === "P2002" && error.meta?.target.includes("email")) {
+    if (error.code === 'P2002' && error.meta?.target.includes('email')) {
       res.status(400).send({ message: "L'adresse e-mail est déjà utilisée." });
     } else {
       res.status(500).send({ error: error });

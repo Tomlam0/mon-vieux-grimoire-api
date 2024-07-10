@@ -13,7 +13,7 @@ const envSchema = z.object({
 
 type EnvSchema = z.infer<typeof envSchema>;
 
-// Convert the Zod schema to JSON Schema format for compatibility with Fastify plugins
+// Convert the Zod schema to JSON Schema format for compatibility with Fastify and ajv
 const envJsonSchema = zodToJsonSchema(envSchema, "envSchema");
 
 const envConfig: FastifyEnvOptions = {
