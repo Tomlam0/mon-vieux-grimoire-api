@@ -38,8 +38,11 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
     const token = req.server.jwt.sign({ userId: user.id }, { expiresIn: '4h' });
 
     res.setCookie('authToken', token, {
-      httpOnly: true, // Set httpOnly cookie to avoid XSS attack
-      sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none', // Protect against CSRF
+      httpOnly: true, // Set httpOnly to avoid XSS attack, cookie only accessible by fetch
+      sameSite:
+        process.env.NODE_ENV === 'production'
+          ? ('lax' as const)
+          : ('none' as const), // Protect against CSRF
       secure: process.env.NODE_ENV === 'production', // Ensure secure flag is set in production
       maxAge: 4 * 60 * 60, // 4 hours
       path: '/',
