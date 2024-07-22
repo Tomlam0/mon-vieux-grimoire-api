@@ -1,0 +1,8 @@
+model Rating {
+  id     String @id @default(uuid())
+  bookId String
+  userId String
+  book   Book   @relation(fields: [bookId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  grade  Int
+}

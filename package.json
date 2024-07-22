@@ -13,12 +13,14 @@
     "prisma:seed:dev": "dotenv -e .env.development -- pnpx prisma db seed",
     "prisma:reset:dev": "dotenv -e .env.development -- pnpx prisma migrate reset --skip-seed",
     "prisma:studio:dev": "dotenv -e .env.development -- pnpx prisma studio --browser none",
+    "prisma:db:pull:dev": "dotenv -e .env.development -- pnpx prisma db pull",
     "prisma:update:dev": "pnpm run prisma:generate:dev && pnpm run prisma:push && pnpm run prisma:studio:dev",
     "prisma:generate:prod": "dotenv -e .env.production -- pnpx prisma generate",
     "prisma:migrate:prod": "dotenv -e .env.production -- pnpx prisma migrate deploy",
     "prisma:push:prod": "dotenv -e .env.production -- pnpx prisma db push",
     "prisma:seed:prod": "dotenv -e .env.production -- pnpx prisma db seed",
-    "prisma:studio:prod": "dotenv -e .env.production -- pnpx prisma studio --browser none"
+    "prisma:studio:prod": "dotenv -e .env.production -- pnpx prisma studio --browser none",
+    "prisma:db:pull:prod": "dotenv -e .env.production -- pnpx prisma db pull"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

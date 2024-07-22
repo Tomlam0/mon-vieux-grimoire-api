@@ -4,13 +4,13 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 generator zod {
   provider = "zod-prisma-types"
-  output   = "../../src/schema/zod"
+  output   = "../../src/schema/generated-schemas"
 
   useMultipleFiles = true //Generate folder for each model
   writeBarrelFiles = true //Generate index for each folder
@@ -18,7 +18,11 @@ generator zod {
   createModelTypes = true // Generate model types
   createInputTypes = true // Generate input types
 
-  addInputTypeValidation = false // Add validation to the generated input types
-  addIncludeType         = false // Add include types for Prisma relations
-  addSelectType          = false // Add select types for Prisma relations
+  addInputTypeValidation           = false // Add validation to the generated input types
+  addIncludeType                   = false // Add include types for Prisma relations
+  addSelectType                    = false // Add select types for Prisma relations
+  validateWhereUniqueInput         = false // Validate the whereUnique input types
+  createOptionalDefaultValuesTypes = false // Create types with optional default values
+  createRelationValuesTypes        = false // Create types that include relation fields
+  createPartialTypes               = false // Create types where all fields are optional
 }

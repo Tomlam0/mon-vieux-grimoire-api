@@ -4,34 +4,22 @@ const currentYear = new Date().getFullYear();
 
 /**
  * ========================================
- *     Book rating input in user form
+ *        Add new rating schema
  * ========================================
  */
-export const RatingInputSchema = z.object({
+export const RatingSchema = z.object({
   grade: z
     .number()
-    .int()
-    .min(0, { message: 'La note doit être un entier positif.' })
-    .max(5, { message: 'La note doit être au maximum de 5.' }),
+    .min(1, { message: 'La note doit être au moins 1.' })
+    .max(5, { message: 'La note doit être au plus 5.' }),
 });
 
 /**
  * ========================================
- *        Book rating for database
+ *        Add new book schema
  * ========================================
  */
-const RatingSchema = RatingInputSchema.extend({
-  userId: z.string({
-    message: "L'ID de l'utilisateur doit être un ObjectId valide.",
-  }),
-});
-
-/**
- * ========================================
- *        Book input in user form
- * ========================================
- */
-export const BookInputSchema = z.object({
+export const BookSchema = z.object({
   title: z
     .string()
     .min(1, { message: 'Le titre ne peut pas être vide.' })
@@ -62,28 +50,12 @@ export const BookInputSchema = z.object({
       message: "L'URL de l'image ne peut pas dépasser 2048 caractères.",
     }),
 
-  ratings: z.array(RatingInputSchema).default([]),
-});
-
-/**
- * ========================================
- *           Book in database
- * ========================================
- */
-export const BookSchema = BookInputSchema.extend({
-  userId: z.string({
-    message: "L'ID de l'utilisateur doit être un ObjectId valide.",
-  }),
-
   ratings: z.array(RatingSchema).default([]),
-
-  averageRating: z.number().min(0).max(5).default(0),
 });
 
 // Schema for the entire collection
 export const BookArraySchema = z.array(BookSchema);
 
 // Infer typescript types for controllers
-export type BookInputRequest = TypeOf<typeof BookInputSchema>; // For a single book in user input
 export type BookRequest = TypeOf<typeof BookSchema>; // For a single book in db
 export type BookArrayRequest = TypeOf<typeof BookArraySchema>; // For all books in db

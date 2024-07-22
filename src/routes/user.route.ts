@@ -1,8 +1,8 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance } from 'fastify';
 
-import { signup, login, logout } from "@controllers/user/index.user";
-import { SignupSchema, LoginSchema } from "@schema/user.schema";
-import { userRateLimitOptions } from "@config/ratelimit.config";
+import { signup, login, logout } from '@controllers/user/index.user';
+import { SignupSchema, LoginSchema } from '@schema/user.schema';
+import { userRateLimitOptions } from '@config/ratelimit.config';
 
 export default async function userRoutes(app: FastifyInstance) {
   /**
@@ -10,9 +10,9 @@ export default async function userRoutes(app: FastifyInstance) {
    *            Signup Route
    * ========================================
    */
-  app.post("/signup", {
+  app.post('/signup', {
     schema: {
-      body: SignupSchema.shape.body,
+      body: SignupSchema,
     },
     handler: signup,
     config: {
@@ -25,9 +25,9 @@ export default async function userRoutes(app: FastifyInstance) {
    *            Login Route
    * ========================================
    */
-  app.post("/login", {
+  app.post('/login', {
     schema: {
-      body: LoginSchema.shape.body,
+      body: LoginSchema,
     },
     handler: login,
     config: {
@@ -41,7 +41,7 @@ export default async function userRoutes(app: FastifyInstance) {
    *            Logout Route
    * ========================================
    */
-  app.post("/logout", {
+  app.post('/logout', {
     preValidation: [app.auth],
     handler: logout,
   });

@@ -1,11 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 
 import prisma from '../../lib/prisma';
-import {
-  BookInputSchema,
-  BookInputRequest,
-  BookRequest,
-} from '@schema/book.schema';
+import { BookSchema } from '@schema/book.schema';
 import { z } from 'zod';
 
 /**
@@ -16,24 +12,27 @@ import { z } from 'zod';
 export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
   try {
     // Datas from user form
-    const userInputData: BookInputRequest = BookInputSchema.parse(req.body);
+    const userInputData = BookSchema.parse(req.body);
 
-    // Datas from user form
-    const ratingsWithUserId = userInputData.ratings.map((rating) => ({
-      ...rating,
-      userId: req.user as string,
-    }));
-
-    // Datas from user form
-    const newBookData: BookRequest = {
+    const newBookData = {
       ...userInputData,
       userId: req.user as string,
-      ratings: ratingsWithUserId,
-      averageRating: 0,
+
+      ratings: {
+        create: userInputData.ratings.map((rating) => ({
+          ...rating,
+          userId: req.user as string, // Ensure each rating has the userId
+        })),
+      },
+
+      averageRating: 0, // Initialize averageRating to 0
     };
 
     const newBook = await prisma.book.create({
       data: newBookData,
+      include: {
+        ratings: true,
+      },
     });
 
     res.status(201).send(newBook);

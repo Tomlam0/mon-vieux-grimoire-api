@@ -1,6 +1,6 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyRequest, FastifyReply } from 'fastify';
 
-import prisma from "../../lib/prisma";
+import prisma from '../../lib/prisma';
 
 /**
  * ========================================
@@ -9,7 +9,11 @@ import prisma from "../../lib/prisma";
  */
 export const getAllBooks = async (req: FastifyRequest, res: FastifyReply) => {
   try {
-    const books = await prisma.book.findMany();
+    const books = await prisma.book.findMany({
+      include: {
+        ratings: true, // Include ratings in the results
+      },
+    });
 
     res.status(200).send(books);
   } catch (error: any) {
