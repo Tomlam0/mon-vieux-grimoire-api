@@ -1,6 +1,6 @@
-import { FastifyEnvOptions } from "@fastify/env";
-import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { FastifyEnvOptions } from '@fastify/env';
+import { z } from 'zod';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
 const envSchema = z.object({
   PORT: z.number().default(4000),
@@ -14,10 +14,10 @@ const envSchema = z.object({
 type EnvSchema = z.infer<typeof envSchema>;
 
 // Convert the Zod schema to JSON Schema format for compatibility with Fastify and ajv
-const envJsonSchema = zodToJsonSchema(envSchema, "envSchema");
+const envJsonSchema = zodToJsonSchema(envSchema, 'envSchema');
 
 const envConfig: FastifyEnvOptions = {
-  confKey: "config",
+  confKey: 'config',
   schema: envJsonSchema,
   dotenv: true,
 };

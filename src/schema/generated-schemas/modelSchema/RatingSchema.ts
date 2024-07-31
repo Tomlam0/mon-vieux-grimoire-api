@@ -9,8 +9,8 @@ export const RatingSchema = z.object({
   bookId: z.string(),
   userId: z.string(),
   grade: z.number().int(),
-})
+});
 
-export type Rating = z.infer<typeof RatingSchema>
+export type Rating = z.infer<typeof RatingSchema>;
 
 export default RatingSchema;

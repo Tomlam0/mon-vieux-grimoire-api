@@ -6,13 +6,16 @@ import { UserCountOrderByAggregateInputSchema } from './UserCountOrderByAggregat
 import { UserMaxOrderByAggregateInputSchema } from './UserMaxOrderByAggregateInputSchema';
 import { UserMinOrderByAggregateInputSchema } from './UserMinOrderByAggregateInputSchema';
 
-export const UserOrderByWithAggregationInputSchema: z.ZodType<Prisma.UserOrderByWithAggregationInput> = z.object({
-  id: z.lazy(() => SortOrderSchema).optional(),
-  email: z.lazy(() => SortOrderSchema).optional(),
-  password: z.lazy(() => SortOrderSchema).optional(),
-  _count: z.lazy(() => UserCountOrderByAggregateInputSchema).optional(),
-  _max: z.lazy(() => UserMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => UserMinOrderByAggregateInputSchema).optional()
-}).strict();
+export const UserOrderByWithAggregationInputSchema: z.ZodType<Prisma.UserOrderByWithAggregationInput> =
+  z
+    .object({
+      id: z.lazy(() => SortOrderSchema).optional(),
+      email: z.lazy(() => SortOrderSchema).optional(),
+      password: z.lazy(() => SortOrderSchema).optional(),
+      _count: z.lazy(() => UserCountOrderByAggregateInputSchema).optional(),
+      _max: z.lazy(() => UserMaxOrderByAggregateInputSchema).optional(),
+      _min: z.lazy(() => UserMinOrderByAggregateInputSchema).optional(),
+    })
+    .strict();
 
 export default UserOrderByWithAggregationInputSchema;

@@ -10,12 +10,26 @@ import { UserUpdateToOneWithWhereWithoutBooksInputSchema } from './UserUpdateToO
 import { UserUpdateWithoutBooksInputSchema } from './UserUpdateWithoutBooksInputSchema';
 import { UserUncheckedUpdateWithoutBooksInputSchema } from './UserUncheckedUpdateWithoutBooksInputSchema';
 
-export const UserUpdateOneRequiredWithoutBooksNestedInputSchema: z.ZodType<Prisma.UserUpdateOneRequiredWithoutBooksNestedInput> = z.object({
-  create: z.union([ z.lazy(() => UserCreateWithoutBooksInputSchema),z.lazy(() => UserUncheckedCreateWithoutBooksInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutBooksInputSchema).optional(),
-  upsert: z.lazy(() => UserUpsertWithoutBooksInputSchema).optional(),
-  connect: z.lazy(() => UserWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => UserUpdateToOneWithWhereWithoutBooksInputSchema),z.lazy(() => UserUpdateWithoutBooksInputSchema),z.lazy(() => UserUncheckedUpdateWithoutBooksInputSchema) ]).optional(),
-}).strict();
+export const UserUpdateOneRequiredWithoutBooksNestedInputSchema: z.ZodType<Prisma.UserUpdateOneRequiredWithoutBooksNestedInput> =
+  z
+    .object({
+      create: z
+        .union([
+          z.lazy(() => UserCreateWithoutBooksInputSchema),
+          z.lazy(() => UserUncheckedCreateWithoutBooksInputSchema),
+        ])
+        .optional(),
+      connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutBooksInputSchema).optional(),
+      upsert: z.lazy(() => UserUpsertWithoutBooksInputSchema).optional(),
+      connect: z.lazy(() => UserWhereUniqueInputSchema).optional(),
+      update: z
+        .union([
+          z.lazy(() => UserUpdateToOneWithWhereWithoutBooksInputSchema),
+          z.lazy(() => UserUpdateWithoutBooksInputSchema),
+          z.lazy(() => UserUncheckedUpdateWithoutBooksInputSchema),
+        ])
+        .optional(),
+    })
+    .strict();
 
 export default UserUpdateOneRequiredWithoutBooksNestedInputSchema;

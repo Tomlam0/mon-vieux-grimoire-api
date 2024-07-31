@@ -1,9 +1,5 @@
 import Fastify, { FastifyError, FastifyInstance } from 'fastify';
-import {
-  serializerCompiler,
-  validatorCompiler,
-  ZodTypeProvider,
-} from 'fastify-type-provider-zod';
+import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod';
 import { fromError } from 'zod-validation-error';
 import fastifyEnv from '@fastify/env';
 import fastifyHelmet from '@fastify/helmet';
@@ -27,10 +23,7 @@ import bookRoutes from '@routes/book.route';
 import userRoutes from '@routes/user.route';
 
 // Check if in development or production mode with .env files
-const envFile =
-  process.env.NODE_ENV === 'production'
-    ? '.env.production'
-    : '.env.development';
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
 dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 
 /**
@@ -66,7 +59,7 @@ const main = async (): Promise<FastifyInstance> => {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
   });
-  
+
   await app.register(auth);
 
   /**
@@ -93,8 +86,7 @@ const main = async (): Promise<FastifyInstance> => {
       res.code(429).send({
         statusCode: 429,
         error: 'Trop de requêtes',
-        message:
-          'Vous avez atteint la limite de requêtes ! Veuillez réessayer dans 1 minute.',
+        message: 'Vous avez atteint la limite de requêtes ! Veuillez réessayer dans 1 minute.',
       });
       return;
     }

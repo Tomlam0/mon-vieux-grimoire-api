@@ -7,11 +7,31 @@ import { RatingCreateOrConnectWithoutUserInputSchema } from './RatingCreateOrCon
 import { RatingCreateManyUserInputEnvelopeSchema } from './RatingCreateManyUserInputEnvelopeSchema';
 import { RatingWhereUniqueInputSchema } from './RatingWhereUniqueInputSchema';
 
-export const RatingUncheckedCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutUserInput> = z.object({
-  create: z.union([ z.lazy(() => RatingCreateWithoutUserInputSchema),z.lazy(() => RatingCreateWithoutUserInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema),z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => RatingCreateManyUserInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
+export const RatingUncheckedCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutUserInput> =
+  z
+    .object({
+      create: z
+        .union([
+          z.lazy(() => RatingCreateWithoutUserInputSchema),
+          z.lazy(() => RatingCreateWithoutUserInputSchema).array(),
+          z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema),
+          z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema).array(),
+        ])
+        .optional(),
+      connectOrCreate: z
+        .union([
+          z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema),
+          z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema).array(),
+        ])
+        .optional(),
+      createMany: z.lazy(() => RatingCreateManyUserInputEnvelopeSchema).optional(),
+      connect: z
+        .union([
+          z.lazy(() => RatingWhereUniqueInputSchema),
+          z.lazy(() => RatingWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+    })
+    .strict();
 
 export default RatingUncheckedCreateNestedManyWithoutUserInputSchema;

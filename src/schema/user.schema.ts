@@ -7,8 +7,7 @@ import { z, TypeOf } from 'zod';
  */
 export const SignupSchema = z.object({
   email: z.string().email({
-    message:
-      "L'adresse e-mail saisie n'est pas valide. Veuillez vérifier et essayer à nouveau.",
+    message: "L'adresse e-mail saisie n'est pas valide. Veuillez vérifier et essayer à nouveau.",
   }),
   password: z
     .string()
@@ -39,8 +38,7 @@ export const SignupSchema = z.object({
  */
 export const LoginSchema = z.object({
   email: z.string().email({
-    message:
-      "L'adresse e-mail saisie n'est pas valide. Veuillez vérifier et essayer à nouveau.",
+    message: "L'adresse e-mail saisie n'est pas valide. Veuillez vérifier et essayer à nouveau.",
   }),
 
   password: z.string().min(1, {

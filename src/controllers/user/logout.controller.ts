@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyRequest, FastifyReply } from 'fastify';
 
 /**
  * ========================================
@@ -7,15 +7,15 @@ import { FastifyRequest, FastifyReply } from "fastify";
  */
 export const logout = async (req: FastifyRequest, res: FastifyReply) => {
   try {
-    res.clearCookie("authToken", {
+    res.clearCookie('authToken', {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
       maxAge: 0,
-      path: "/",
+      path: '/',
     });
 
-    res.status(200).send({ message: "Déconnexion réussie" });
+    res.status(200).send({ message: 'Déconnexion réussie' });
   } catch (error: any) {
     res.status(500).send({ error: error.message });
   }

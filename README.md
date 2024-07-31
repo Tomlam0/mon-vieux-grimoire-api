@@ -4,10 +4,10 @@
 ![Fastify](https://img.shields.io/badge/Fastify-%20-black?style=for-the-badge&logo=fastify)
 ![TypeScript](https://img.shields.io/badge/TypeScript-%20-blue?style=for-the-badge&logo=typescript)
 ![Prisma](https://img.shields.io/badge/Prisma-%20-3DDC84?style=for-the-badge&logo=prisma)
-![MongoDB](https://img.shields.io/badge/MongoDB-%20-green?style=for-the-badge&logo=mongodb)
-![Swagger](https://img.shields.io/badge/Swagger-%20-85EA2D?style=for-the-badge&logo=swagger)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%2300338C.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Nodemon](https://img.shields.io/badge/Nodemon-%20-76D04B?style=for-the-badge&logo=nodemon)
 ![Zod](https://img.shields.io/badge/Zod-%20-black?style=for-the-badge&logo=zod)
+![Swagger](https://img.shields.io/badge/Swagger-%20-85EA2D?style=for-the-badge&logo=swagger)
 
 ## Description
 
@@ -47,6 +47,12 @@ pnpm start
 # Compile TypeScript to JavaScript
 pnpm build
 
+# Format the codebase using Prettier settings
+pnpm format
+
+# Check if the codebase is formatted according to Prettier rules
+pnpm format:check
+
 # Generate the Prisma client for development
 pnpm prisma:generate:dev
 
@@ -83,6 +89,26 @@ pnpm prisma:seed:prod
 # Open Prisma Studio for production
 pnpm prisma:studio:prod
 ```
+
+## Import Aliases
+
+This project uses import aliases for easier module resolution.  
+The aliases are defined in the tsconfig.json file as follows:
+
+```bash
+ "baseUrl": "./src",
+ "paths": {
+   "@/*": ["*"],
+   "@config/*": ["config/*"],
+   "@controllers/*": ["controllers/*"],
+   "@lib/*": ["lib/*"],
+   "@plugins/*": ["plugins/*"],
+   "@routes/*": ["routes/*"],
+   "@schema/*": ["schema/*"],
+   "@types/*": ["types/*"]
+```
+
+These aliases allow you to import modules using the @ prefix instead of relative paths.
 
 ## Installation
 

@@ -1,15 +1,15 @@
-import { FastifyCorsOptions } from "@fastify/cors";
+import { FastifyCorsOptions } from '@fastify/cors';
 
 export default function getCorsConfig(): FastifyCorsOptions {
   return {
     origin: process.env.ORIGIN,
 
-    credentials: process.env.CREDENTIALS === "true",
+    credentials: process.env.CREDENTIALS === 'true',
 
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 
-    exposedHeaders: ["Content-Length", "Date", "X-Request-Id"],
+    exposedHeaders: ['Content-Length', 'Date', 'X-Request-Id'],
   };
 }

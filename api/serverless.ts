@@ -1,16 +1,16 @@
-import { FastifyRequest, FastifyReply } from "fastify";
-import * as dotenv from "dotenv";
+import { FastifyRequest, FastifyReply } from 'fastify';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-import { main } from "../src/app";
+import { main } from '../src/app';
 
 const startServerless = async () => {
   const app = await main();
 
   return async (req: FastifyRequest, res: FastifyReply) => {
     await app.ready();
-    app.server.emit("request", req, res);
+    app.server.emit('request', req, res);
   };
 };
 

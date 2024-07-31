@@ -1,4 +1,4 @@
-import { main } from "./app";
+import { main } from './app';
 
 const start = async () => {
   const app = await main();

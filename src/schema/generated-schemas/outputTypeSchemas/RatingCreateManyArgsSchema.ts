@@ -1,10 +1,12 @@
 import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
-import { RatingCreateManyInputSchema } from '../inputTypeSchemas/RatingCreateManyInputSchema'
+import { RatingCreateManyInputSchema } from '../inputTypeSchemas/RatingCreateManyInputSchema';
 
-export const RatingCreateManyArgsSchema: z.ZodType<Prisma.RatingCreateManyArgs> = z.object({
-  data: z.union([ RatingCreateManyInputSchema,RatingCreateManyInputSchema.array() ]),
-  skipDuplicates: z.boolean().optional(),
-}).strict() ;
+export const RatingCreateManyArgsSchema: z.ZodType<Prisma.RatingCreateManyArgs> = z
+  .object({
+    data: z.union([RatingCreateManyInputSchema, RatingCreateManyInputSchema.array()]),
+    skipDuplicates: z.boolean().optional(),
+  })
+  .strict();
 
 export default RatingCreateManyArgsSchema;

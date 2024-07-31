@@ -5,12 +5,16 @@ import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOpera
 import { BookUpdateManyWithoutUserNestedInputSchema } from './BookUpdateManyWithoutUserNestedInputSchema';
 import { RatingUpdateManyWithoutUserNestedInputSchema } from './RatingUpdateManyWithoutUserNestedInputSchema';
 
-export const UserUpdateInputSchema: z.ZodType<Prisma.UserUpdateInput> = z.object({
-  id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  password: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  books: z.lazy(() => BookUpdateManyWithoutUserNestedInputSchema).optional(),
-  ratings: z.lazy(() => RatingUpdateManyWithoutUserNestedInputSchema).optional()
-}).strict();
+export const UserUpdateInputSchema: z.ZodType<Prisma.UserUpdateInput> = z
+  .object({
+    id: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
+    email: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)]).optional(),
+    password: z
+      .union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)])
+      .optional(),
+    books: z.lazy(() => BookUpdateManyWithoutUserNestedInputSchema).optional(),
+    ratings: z.lazy(() => RatingUpdateManyWithoutUserNestedInputSchema).optional(),
+  })
+  .strict();
 
 export default UserUpdateInputSchema;

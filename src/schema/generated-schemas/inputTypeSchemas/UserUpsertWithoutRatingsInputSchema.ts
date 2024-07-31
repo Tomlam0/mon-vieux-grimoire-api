@@ -7,10 +7,19 @@ import { UserCreateWithoutRatingsInputSchema } from './UserCreateWithoutRatingsI
 import { UserUncheckedCreateWithoutRatingsInputSchema } from './UserUncheckedCreateWithoutRatingsInputSchema';
 import { UserWhereInputSchema } from './UserWhereInputSchema';
 
-export const UserUpsertWithoutRatingsInputSchema: z.ZodType<Prisma.UserUpsertWithoutRatingsInput> = z.object({
-  update: z.union([ z.lazy(() => UserUpdateWithoutRatingsInputSchema),z.lazy(() => UserUncheckedUpdateWithoutRatingsInputSchema) ]),
-  create: z.union([ z.lazy(() => UserCreateWithoutRatingsInputSchema),z.lazy(() => UserUncheckedCreateWithoutRatingsInputSchema) ]),
-  where: z.lazy(() => UserWhereInputSchema).optional()
-}).strict();
+export const UserUpsertWithoutRatingsInputSchema: z.ZodType<Prisma.UserUpsertWithoutRatingsInput> =
+  z
+    .object({
+      update: z.union([
+        z.lazy(() => UserUpdateWithoutRatingsInputSchema),
+        z.lazy(() => UserUncheckedUpdateWithoutRatingsInputSchema),
+      ]),
+      create: z.union([
+        z.lazy(() => UserCreateWithoutRatingsInputSchema),
+        z.lazy(() => UserUncheckedCreateWithoutRatingsInputSchema),
+      ]),
+      where: z.lazy(() => UserWhereInputSchema).optional(),
+    })
+    .strict();
 
 export default UserUpsertWithoutRatingsInputSchema;

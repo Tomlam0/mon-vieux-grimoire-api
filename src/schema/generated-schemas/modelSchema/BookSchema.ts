@@ -13,8 +13,8 @@ export const BookSchema = z.object({
   year: z.number().int(),
   genre: z.string(),
   averageRating: z.number(),
-})
+});
 
-export type Book = z.infer<typeof BookSchema>
+export type Book = z.infer<typeof BookSchema>;
 
 export default BookSchema;
