@@ -1,6 +1,6 @@
-import { EnvSchema } from "@/config/env.config";
+import { EnvSchema } from '@config/env.config';
 
-declare module "fastify" {
+declare module 'fastify' {
   interface FastifyInstance {
     // Holds configuration values loaded from environment variables.
     config: EnvSchema;

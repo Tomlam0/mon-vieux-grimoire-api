@@ -1,10 +1,10 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyRequest, FastifyReply } from 'fastify';
 
-import prisma from "../../lib/prisma";
-import { Book } from "@schema/zod/index";
+import prisma from '@lib/prisma';
+import { Book } from '@schema/generated-schemas/index';
 
 type GetOneBookParams = {
-  id: Book["id"];
+  id: Book['id'];
 };
 
 /**
@@ -24,7 +24,7 @@ export const getOneBook = async (
     });
 
     if (!book) {
-      res.status(404).send({ error: "Book not found" });
+      res.status(404).send({ error: 'Book not found' });
       return;
     }
 

@@ -1,8 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-
-import prisma from '../../lib/prisma';
-import { BookSchema } from '@schema/book.schema';
 import { z } from 'zod';
+
+import prisma from '@lib/prisma';
+import { BookSchema } from '@schema/book.schema';
 
 /**
  * ========================================

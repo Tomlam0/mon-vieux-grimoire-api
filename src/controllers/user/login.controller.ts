@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
-import prisma from '../../lib/prisma';
+import prisma from '@lib/prisma';
 import { LoginRequest } from '@schema/user.schema';
 
 /**
@@ -39,10 +39,7 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
 
     res.setCookie('authToken', token, {
       httpOnly: true, // Set httpOnly to avoid XSS attack, cookie only accessible by fetch
-      sameSite:
-        process.env.NODE_ENV === 'production'
-          ? ('lax' as const)
-          : ('none' as const), // Protect against CSRF
+      sameSite: process.env.NODE_ENV === 'production' ? ('lax' as const) : ('none' as const), // Protect against CSRF
       secure: process.env.NODE_ENV === 'production', // Ensure secure flag is set in production
       maxAge: 4 * 60 * 60, // 4 hours
       path: '/',
