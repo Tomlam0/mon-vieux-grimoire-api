@@ -17,7 +17,7 @@ const auth = async (app: FastifyInstance) => {
 
       if (!token) throw new Error('Aucun token fourni');
 
-      const decoded = await app.jwt.verify<JwtPayload>(token);
+      const decoded = app.jwt.verify<JwtPayload>(token);
 
       // Extract userId from jwt payload and attach it to the request object
       req.user = decoded.userId;

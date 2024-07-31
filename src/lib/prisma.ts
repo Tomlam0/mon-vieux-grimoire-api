@@ -1,9 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+import { FastifyInstance } from 'fastify';
+import loggerConfig from '@config/logger.config';
 
 const prisma = new PrismaClient();
 
-prisma.$connect().catch((e) => {
-  console.error('Failed to connect to the database:', e);
+prisma.$connect().catch((error) => {
+  const logger = loggerConfig as FastifyInstance['log'];
+  logger.error('Failed to connect to the database:', error);
   process.exit(1);
 });
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
@@ -20,18 +21,20 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
 
     // Verify if user exist on db
     if (!user) {
-      return res.status(401).send({
+      await res.status(401).send({
         message: 'Paire identifiant / mot de passe incorrect',
       });
+      return;
     }
 
     // Compare password
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
-      return res.status(401).send({
+      await res.status(401).send({
         message: 'Paire identifiant / mot de passe incorrect',
       });
+      return;
     }
 
     // Generate JWT with userId in payload
@@ -45,10 +48,10 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
       path: '/',
     });
 
-    res.status(200).send({
+    await res.status(200).send({
       userId: user.id,
     });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    await res.status(500).send({ error: error.message });
   }
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
@@ -29,7 +30,7 @@ export const signup = async (req: FastifyRequest, res: FastifyReply) => {
     if (error.code === 'P2002' && error.meta?.target.includes('email')) {
       res.status(400).send({ message: "L'adresse e-mail est déjà utilisée." });
     } else {
-      res.status(500).send({ error: error });
+      res.status(500).send({ error: (error as Error).message });
     }
   }
 };

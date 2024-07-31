@@ -69,7 +69,7 @@ const main = async (): Promise<FastifyInstance> => {
    */
   app.register(bookRoutes, { prefix: '/api/books' });
   // Register user routes with compression
-  app.register(async (app) => {
+  app.register(async () => {
     await app.register(fastifyCompress);
 
     app.register(userRoutes, { prefix: '/api/auth' });
