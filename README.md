@@ -1,13 +1,13 @@
 # Mon Vieux Grimoire - Backend
 
-![Node.js](https://img.shields.io/badge/Node.js-%20-339933?style=for-the-badge&logo=node.js)
-![Fastify](https://img.shields.io/badge/Fastify-%20-black?style=for-the-badge&logo=fastify)
-![TypeScript](https://img.shields.io/badge/TypeScript-%20-blue?style=for-the-badge&logo=typescript)
-![Prisma](https://img.shields.io/badge/Prisma-%20-3DDC84?style=for-the-badge&logo=prisma)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%2300338C.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![Nodemon](https://img.shields.io/badge/Nodemon-%20-76D04B?style=for-the-badge&logo=nodemon)
-![Zod](https://img.shields.io/badge/Zod-%20-black?style=for-the-badge&logo=zod)
-![Swagger](https://img.shields.io/badge/Swagger-%20-85EA2D?style=for-the-badge&logo=swagger)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Fastify](https://img.shields.io/badge/Fastify-black?style=for-the-badge&logo=fastify&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-3DDC84?style=for-the-badge&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-00338C?style=for-the-badge&logo=postgresql&logoColor=white)
+![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=for-the-badge&logo=nodemon&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-black?style=for-the-badge&logo=zod&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)
 
 ## Description
 
@@ -15,9 +15,11 @@ This project is a backend for the "Mon Vieux Grimoire" application.
 
 ## Prerequisites
 
-- Node.js (version 20.x or higher)
-- MongoDB (a MongoDB Atlas instance is recommended)
-- PNPM (package manager)
+Before setting up the project, ensure you have the following:
+
+- Node.js (version 20.x or higher (LTS))
+- pnpm (package manager)
+- PostgreSQL
 - Prisma CLI
 
 ## Project Structure
@@ -52,6 +54,12 @@ pnpm format
 
 # Check if the codebase is formatted according to Prettier rules
 pnpm format:check
+
+# Check the codebase for linting errors using ESLint
+pnpm lint
+
+# Fix linting errors in the codebase using ESLint
+pnpm lint:fix
 
 # Generate the Prisma client for development
 pnpm prisma:generate:dev
@@ -97,7 +105,7 @@ The aliases are defined in the tsconfig.json file as follows:
 
 ```bash
  "baseUrl": "./src",
- "paths": {
+ "paths":
    "@/*": ["*"],
    "@config/*": ["config/*"],
    "@controllers/*": ["controllers/*"],
@@ -146,12 +154,12 @@ To generate the Prisma client based on the schema with package.json scripts
 pnpm prisma:generate:dev
 ```
 
-2. Apply Schema Changes to the Database:
+2. Migrate Schema:
 
-Since migrations are not available for MongoDB, use the following command to apply the schema changes to the database
+Use the following command to apply the schema changes to the database
 
 ```bash
-pnpm prisma:push:dev
+pnpm prisma:migrate:dev
 ```
 
 3. Start the server:
@@ -172,8 +180,12 @@ This is particularly useful for debugging and managing your data during developm
 pnpm prisma:studio:dev
 ```
 
-For more granular control and advanced features, it is recommended to use MongoDB Compass.
+For more granular control and advanced features, it is recommended to use a specific DB UI.
 
 ## Swagger api documentation endpoint
 
 http://localhost:3000/api/docs
+
+## Contact
+
+For any questions, please contact contact@thomas-lambert-dev.com.
