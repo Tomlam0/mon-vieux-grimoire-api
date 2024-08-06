@@ -8,7 +8,9 @@ const envSchema = z.object({
   CREDENTIALS: z.boolean(),
   DATABASE_URL: z.string(),
   JWT_SECRET_KEY: z.string(),
-  // ENABLE_SWAGGER: z.boolean().optional().default(true),
+  ENABLE_SWAGGER: z.boolean(),
+  SWAGGER_UI_USERNAME: z.string().optional(),
+  SWAGGER_UI_PASSWORD: z.string().optional(),
 });
 
 type EnvSchema = z.infer<typeof envSchema>;

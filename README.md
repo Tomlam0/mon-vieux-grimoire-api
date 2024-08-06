@@ -184,7 +184,7 @@ For more granular control and advanced features, it is recommended to use a spec
 
 ## Swagger api documentation endpoint
 
-http://localhost:3000/api/docs
+http://localhost:4000/api/docs
 
 ## Contact
 
