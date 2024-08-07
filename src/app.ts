@@ -1,6 +1,4 @@
 import Fastify, { FastifyError, FastifyInstance } from 'fastify';
-import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod';
-import { fromError } from 'zod-validation-error';
 import fastifyEnv from '@fastify/env';
 import fastifyHelmet from '@fastify/helmet';
 import fastifyCors from '@fastify/cors';
@@ -9,6 +7,14 @@ import rateLimit from '@fastify/rate-limit';
 import fastifyCookie from '@fastify/cookie';
 import dotenv from 'dotenv';
 import path from 'path';
+
+import 'zod-openapi/extend';
+import {
+  serializerCompiler,
+  validatorCompiler,
+  type FastifyZodOpenApiTypeProvider,
+} from 'fastify-zod-openapi';
+import { fromError } from 'zod-validation-error';
 
 import { envConfig } from '@config/env.config';
 import corsConfig from '@config/cors.config';
@@ -32,7 +38,7 @@ dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 const main = async (): Promise<FastifyInstance> => {
   const app = Fastify({
     logger: loggerConfig,
-  }).withTypeProvider<ZodTypeProvider>();
+  }).withTypeProvider<FastifyZodOpenApiTypeProvider>();
 
   // Configure zod type provider
   app.setValidatorCompiler(validatorCompiler);
@@ -53,6 +59,7 @@ const main = async (): Promise<FastifyInstance> => {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
   });
+
   await app.register(auth);
   await app.register(initSwagger);
 

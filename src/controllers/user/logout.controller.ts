@@ -10,9 +10,8 @@ export const logout = async (req: FastifyRequest, res: FastifyReply) => {
   try {
     res.clearCookie('authToken', {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 0,
       path: '/',
     });
 

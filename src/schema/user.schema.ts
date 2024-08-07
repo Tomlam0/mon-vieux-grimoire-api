@@ -6,9 +6,16 @@ import { z, TypeOf } from 'zod';
  * ========================================
  */
 export const SignupSchema = z.object({
-  email: z.string().email({
-    message: "L'adresse e-mail saisie n'est pas valide. Veuillez vérifier et essayer à nouveau.",
-  }),
+  // Email
+  email: z
+    .string()
+    .email({
+      message: "L'adresse e-mail saisie n'est pas valide. Veuillez vérifier et essayer à nouveau.",
+    })
+
+    .openapi({ description: 'Email address of the user', example: 'user@example.com' }),
+
+  // Password
   password: z
     .string()
     .min(8, {
@@ -28,7 +35,9 @@ export const SignupSchema = z.object({
     })
     .refine((value) => !/\s/.test(value), {
       message: "Le mot de passe ne doit pas contenir d'espaces.",
-    }),
+    })
+
+    .openapi({ description: 'Password of the user' }),
 });
 
 /**

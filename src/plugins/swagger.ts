@@ -3,10 +3,20 @@ import fp from 'fastify-plugin';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyBasicAuth from '@fastify/basic-auth';
+import {
+  fastifyZodOpenApiPlugin,
+  fastifyZodOpenApiTransform,
+  fastifyZodOpenApiTransformObject,
+} from 'fastify-zod-openapi';
+import { type ZodOpenApiVersion } from 'zod-openapi';
 
 const initSwagger = async (app: FastifyInstance) => {
   if (process.env.ENABLE_SWAGGER === 'true') {
-    // Auhtentification configuration for swagger ui access security
+    /**
+     * ========================================
+     *   Auth config for swagger ui access security
+     * ========================================
+     */
     app.register(fastifyBasicAuth, {
       validate: async (
         username: string,
@@ -24,7 +34,13 @@ const initSwagger = async (app: FastifyInstance) => {
       authenticate: true,
     });
 
-    // Main Swagger config
+    /**
+     * ========================================
+     *            Main Swagger config
+     * ========================================
+     */
+    const openapi: ZodOpenApiVersion = '3.0.0';
+    await app.register(fastifyZodOpenApiPlugin, { openapi });
     await app.register(fastifySwagger, {
       openapi: {
         info: {
@@ -34,8 +50,16 @@ const initSwagger = async (app: FastifyInstance) => {
         },
 
         tags: [
-          { name: 'User', description: 'User end-points' },
-          { name: 'Book', description: 'Book end-points' },
+          {
+            name: 'User',
+            description:
+              'Operations related to user management, including user registration, authentication and deconnexion.',
+          },
+          {
+            name: 'Book',
+            description:
+              'Operations related to book management, including adding new books, retrieving book details, updating book information, and deleting books.',
+          },
         ],
 
         servers: [
@@ -56,12 +80,17 @@ const initSwagger = async (app: FastifyInstance) => {
           },
         },
 
-        // Apply the authToken security scheme to all endpoints
-        security: [{ authToken: [] }],
+        openapi,
       },
+      transform: fastifyZodOpenApiTransform,
+      transformObject: fastifyZodOpenApiTransformObject,
     });
 
-    // Swagger UI
+    /**
+     * ========================================
+     *            Swagger UI config
+     * ========================================
+     */
     await app.register(fastifySwaggerUi, {
       uiHooks: {
         // Check for auth
@@ -79,6 +108,10 @@ const initSwagger = async (app: FastifyInstance) => {
       uiConfig: {
         docExpansion: 'list',
         deepLinking: false,
+        requestInterceptor: (req) => {
+          req.withCredentials = true; // Include cookies in resquests
+          return req;
+        },
       },
     });
   }

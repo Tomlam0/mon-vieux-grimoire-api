@@ -19,6 +19,7 @@ const bookRoutes = async (app: FastifyInstance) => {
    */
   app.get('/', {
     schema: {
+      tags: ['Book'],
       response: {
         200: BookArraySchema,
       },
@@ -33,6 +34,7 @@ const bookRoutes = async (app: FastifyInstance) => {
    */
   app.get('/:id', {
     schema: {
+      tags: ['Book'],
       response: {
         200: BookSchema,
       },
@@ -47,6 +49,7 @@ const bookRoutes = async (app: FastifyInstance) => {
    */
   app.get('/bestrating', {
     schema: {
+      tags: ['Book'],
       response: {
         200: BookArraySchema,
       },
@@ -62,6 +65,7 @@ const bookRoutes = async (app: FastifyInstance) => {
   app.post('/', {
     preValidation: [app.auth],
     schema: {
+      tags: ['Book'],
       body: BookSchema,
     },
     handler: createBook,
@@ -75,6 +79,7 @@ const bookRoutes = async (app: FastifyInstance) => {
   app.post('/:id/rating', {
     preValidation: [app.auth],
     schema: {
+      tags: ['Book'],
       body: BookSchema,
     },
     handler: rateBook,
@@ -88,6 +93,7 @@ const bookRoutes = async (app: FastifyInstance) => {
   app.put('/:id', {
     preValidation: [app.auth],
     schema: {
+      tags: ['Book'],
       body: BookSchema,
     },
     handler: updateBook,
@@ -101,6 +107,7 @@ const bookRoutes = async (app: FastifyInstance) => {
   app.delete('/:id', {
     preValidation: [app.auth],
     schema: {
+      tags: ['Book'],
       body: BookSchema,
     },
     handler: deleteBook,

@@ -62,15 +62,18 @@ importers:
       fastify-plugin:
         specifier: ^4.5.1
         version: 4.5.1
-      fastify-type-provider-zod:
-        specifier: ^2.0.0
-        version: 2.0.0(fastify@4.28.1)(zod@3.23.8)
+      fastify-zod-openapi:
+        specifier: ^1.2.1
+        version: 1.2.1(fastify@4.28.1)(zod-openapi@2.19.0(zod@3.23.8))(zod@3.23.8)
       sharp:
         specifier: ^0.32.6
         version: 0.32.6
       zod:
         specifier: ^3.23.8
         version: 3.23.8
+      zod-openapi:
+        specifier: ^2.19.0
+        version: 2.19.0(zod@3.23.8)
       zod-prisma-types:
         specifier: ^3.1.8
         version: 3.1.8
@@ -117,6 +120,9 @@ importers:
       eslint-plugin-prettier:
         specifier: ^5.2.1
         version: 5.2.1(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-zod-openapi:
+        specifier: ^0.2.0
+        version: 0.2.0(eslint@8.57.0)(typescript@5.5.3)
       nodemon:
         specifier: ^3.1.4
         version: 3.1.4
@@ -1320,6 +1326,10 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
+  eslint-plugin-zod-openapi@0.2.0:
+    resolution: {integrity: sha512-Gnnhfu9dGK8KueowyaTizA+nFrt56cWPxVmxZD7SjTMr/vCkuiShBEbik9A4Tgbg9fgefqWzCkLx5o7DYn3asQ==}
+    engines: {node: '>=16.11'}
+
   eslint-scope@7.2.2:
     resolution: {integrity: sha512-dOt21O7lTMhDM+X9mB4GX+DZrZtCUJPL/wlcTqxyrx5IvO0IYtILdtrQGQp+8n5S0gwSVmOf9NQrjMOgfQZlIg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -1424,11 +1434,13 @@ packages:
   fastify-plugin@4.5.1:
     resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
 
-  fastify-type-provider-zod@2.0.0:
-    resolution: {integrity: sha512-LSbz6DikD9BcQmSDFn7uXFmrFS2gRMiSkwiQeIeAH3XEGOyjokJKsH4DRRuxSn7fTz1UNTNiujib4+MTNw+nOg==}
+  fastify-zod-openapi@1.2.1:
+    resolution: {integrity: sha512-O/oDpAv8iaNN109F9LwV77xaDd1xiSHRi1wCmma1iidizdZlxYaD+xyrCS3kWkP6hzugeqKplbqisu3CmOoX4A==}
+    engines: {node: '>=16.11'}
     peerDependencies:
-      fastify: ^4.0.0
-      zod: ^3.14.2
+      fastify: '4'
+      zod: ^3.21.4
+      zod-openapi: ^2.6.3
 
   fastify@4.28.1:
     resolution: {integrity: sha512-kFWUtpNr4i7t5vY2EJPCN2KgMVpuqfU4NjnJNCgiNB900oiDeYqaNDRcAfeBbOF5hGixixxcKnOU4KN9z6QncQ==}
@@ -2597,6 +2609,12 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod-openapi@2.19.0:
+    resolution: {integrity: sha512-OUAAyBDPPwZ9u61i4k/LieXUzP2re8kFjqdNh2AvHjsyi/aRNz9leDAtMGcSoSzUT5xUeQoACJufBI6FzzZyxA==}
+    engines: {node: '>=16.11'}
+    peerDependencies:
+      zod: ^3.21.4
 
   zod-prisma-types@3.1.8:
     resolution: {integrity: sha512-5oe0ays3ur4u2GtuUqlhgCraKBcsuMaMI8o7VMV4YAnFeOuVid7K2zGvjI19V0ue9PeNF2ICyVREQVohaQm5dw==}
@@ -4486,6 +4504,14 @@ snapshots:
       string.prototype.matchall: 4.0.11
       string.prototype.repeat: 1.0.0
 
+  eslint-plugin-zod-openapi@0.2.0(eslint@8.57.0)(typescript@5.5.3):
+    dependencies:
+      '@typescript-eslint/utils': 7.18.0(eslint@8.57.0)(typescript@5.5.3)
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - typescript
+
   eslint-scope@7.2.2:
     dependencies:
       esrecurse: 4.3.0
@@ -4621,11 +4647,12 @@ snapshots:
 
   fastify-plugin@4.5.1: {}
 
-  fastify-type-provider-zod@2.0.0(fastify@4.28.1)(zod@3.23.8):
+  fastify-zod-openapi@1.2.1(fastify@4.28.1)(zod-openapi@2.19.0(zod@3.23.8))(zod@3.23.8):
     dependencies:
       fastify: 4.28.1
+      fastify-plugin: 4.5.1
       zod: 3.23.8
-      zod-to-json-schema: 3.23.1(zod@3.23.8)
+      zod-openapi: 2.19.0(zod@3.23.8)
 
   fastify@4.28.1:
     dependencies:
@@ -5933,6 +5960,10 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod-openapi@2.19.0(zod@3.23.8):
+    dependencies:
+      zod: 3.23.8
 
   zod-prisma-types@3.1.8:
     dependencies:
