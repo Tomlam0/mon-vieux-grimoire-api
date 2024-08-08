@@ -1,0 +1,40 @@
+import { FastifyInstance } from 'fastify';
+
+import { ERROR500 } from '@constants/response.constants';
+import { logout } from '@controllers/user/index';
+
+export async function logoutRoute(app: FastifyInstance) {
+  // JWT is set on a cookie so we need to delete the cookie from backend on user logout
+  /**
+   * ========================================
+   *            Logout route
+   * ========================================
+   */
+  app.post('/logout', {
+    preValidation: [app.auth],
+
+    schema: {
+      tags: ['User'],
+      summary: 'Disconnect user and delete the cookie',
+
+      security: [{ authToken: [] }],
+
+      response: {
+        200: {
+          description: 'OK',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: { message: { type: 'string', example: 'Déconnexion réussie' } },
+              },
+            },
+          },
+        },
+        500: ERROR500,
+      },
+    },
+
+    handler: logout,
+  });
+}

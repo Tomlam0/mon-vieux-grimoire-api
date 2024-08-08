@@ -23,8 +23,8 @@ import loggerConfig from '@config/logger.config';
 import auth from '@plugins/auth';
 import initSwagger from '@plugins/swagger';
 
-import bookRoutes from '@routes/book.route';
-import userRoutes from '@routes/user.route';
+import bookRoutes from '@routes/book/index';
+import userRoutes from '@routes/user/index';
 
 // Check if in development or production mode with .env files
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';

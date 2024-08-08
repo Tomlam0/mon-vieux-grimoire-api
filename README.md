@@ -29,6 +29,7 @@ Before setting up the project, ensure you have the following:
 ├── prisma/                      # Contains Prisma files, such as schemas and seed scripts.
 ├── src/
 │   ├── config/                  # Configuration, such as CORS and environment variables.
+│   ├── constants/               # Contains common constants used across the application.
 │   ├── controllers/             # Contains controllers to handle requests and business logic.
 │   ├── lib/                     # Contains modules used in the application like Prisma client.
 │   ├── plugins/                 # Plugins to extend Fastify's functionality.

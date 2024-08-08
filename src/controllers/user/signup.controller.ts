@@ -3,7 +3,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
 import prisma from '@lib/prisma';
-import { SignupRequest } from '@schema/user.schema';
+import { SignupRequest } from '@schema/user/signup.schema';
 
 /**
  * ========================================

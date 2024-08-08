@@ -3,7 +3,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
 
 import prisma from '@lib/prisma';
-import { BookSchema } from '@schema/book.schema';
+import { BookSchema } from '@/schema/book/book.schema';
 
 /**
  * ========================================

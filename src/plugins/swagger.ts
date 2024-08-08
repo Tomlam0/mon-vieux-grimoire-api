@@ -17,22 +17,22 @@ const initSwagger = async (app: FastifyInstance) => {
      *   Auth config for swagger ui access security
      * ========================================
      */
-    app.register(fastifyBasicAuth, {
-      validate: async (
-        username: string,
-        password: string,
-        req: FastifyRequest,
-        res: FastifyReply
-      ) => {
-        if (
-          username !== process.env.SWAGGER_UI_USERNAME ||
-          password !== process.env.SWAGGER_UI_PASSWORD
-        ) {
-          res.code(401).send({ message: 'Unauthorized' });
-        }
-      },
-      authenticate: true,
-    });
+    // app.register(fastifyBasicAuth, {
+    //   validate: async (
+    //     username: string,
+    //     password: string,
+    //     req: FastifyRequest,
+    //     res: FastifyReply
+    //   ) => {
+    //     if (
+    //       username !== process.env.SWAGGER_UI_USERNAME ||
+    //       password !== process.env.SWAGGER_UI_PASSWORD
+    //     ) {
+    //       res.code(401).send({ message: 'Unauthorized' });
+    //     }
+    //   },
+    //   authenticate: true,
+    // });
 
     /**
      * ========================================
@@ -45,7 +45,12 @@ const initSwagger = async (app: FastifyInstance) => {
       openapi: {
         info: {
           title: 'Mon Vieux Grimoire API',
-          description: 'API Documentation for Mon Vieux Grimoire',
+          description: `
+            API Documentation for Mon Vieux Grimoire.
+            
+            **Note**: Cookie authentication is currently not supported for "Try it out" requests due to browser security restrictions. 
+            Please use tools like Postman for testing endpoints that require cookie authentication.
+          `,
           version: '1.0.0',
         },
 
@@ -107,11 +112,8 @@ const initSwagger = async (app: FastifyInstance) => {
       // Expand tag sections by default and cancel endpoints deeplinks
       uiConfig: {
         docExpansion: 'list',
+
         deepLinking: false,
-        requestInterceptor: (req) => {
-          req.withCredentials = true; // Include cookies in resquests
-          return req;
-        },
       },
     });
   }
