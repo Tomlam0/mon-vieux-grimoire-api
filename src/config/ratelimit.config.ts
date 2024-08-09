@@ -22,4 +22,16 @@ export const userRateLimitOptions = {
         'Vous avez atteint la limite de tentatives de connexion ! Veuillez réessayer dans 1 minute.',
     }),
   },
+
+  // Rate limit for adding a new book
+  addBook: {
+    max: 5,
+    timeWindow: '1 minute',
+    errorResponseBuilder: () => ({
+      statusCode: 429,
+      error: 'Trop de requêtes',
+      message:
+        "Vous avez atteint la limite d'ajout de nouveau livre ! Veuillez réessayer dans 1 minute.",
+    }),
+  },
 };

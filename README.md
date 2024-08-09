@@ -5,6 +5,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-3DDC84?style=for-the-badge&logo=prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-00338C?style=for-the-badge&logo=postgresql&logoColor=white)
+![AWS S3](https://img.shields.io/badge/AWS_S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
 ![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=for-the-badge&logo=nodemon&logoColor=white)
 ![Zod](https://img.shields.io/badge/Zod-black?style=for-the-badge&logo=zod&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)
@@ -21,6 +22,7 @@ Before setting up the project, ensure you have the following:
 - pnpm (package manager)
 - PostgreSQL
 - Prisma CLI
+- An AWS account with access to S3 (for storing book images)
 
 ## Project Structure
 
@@ -109,6 +111,7 @@ The aliases are defined in the tsconfig.json file as follows:
  "paths":
    "@/*": ["*"],
    "@config/*": ["config/*"],
+   "@constants/*": ["constants/*"],
    "@controllers/*": ["controllers/*"],
    "@lib/*": ["lib/*"],
    "@plugins/*": ["plugins/*"],
@@ -147,6 +150,8 @@ The application requires all the environment variables in the .env.example file
 
 ## Usage
 
+![Prisma](https://img.shields.io/badge/Prisma-3DDC84?style=for-the-badge&logo=prisma&logoColor=white)
+
 1. Generate Prisma Client:
 
 To generate the Prisma client based on the schema with package.json scripts
@@ -183,7 +188,27 @@ pnpm prisma:studio:dev
 
 For more granular control and advanced features, it is recommended to use a specific DB UI.
 
+## Setting Up AWS S3 for Storing Book Images
+
+![AWS S3](https://img.shields.io/badge/AWS_S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
+
+1. Create an S3 Bucket:
+
+Log in to your AWS console, go to S3, and create a new S3 bucket to store your files.  
+Take note of the bucket name and region (e.g., eu-west-3 for Paris).
+
+2. Create an IAM User:
+
+Go to the AWS IAM console, create a new IAM user specifically for your project.  
+This user should have the `AmazonS3FullAccess` permission, or you can create a custom policy that provides the necessary permissions for accessing your S3 bucket.
+
+3. Create Access Keys:
+
+After creating the IAM user, generate a set of access keys for programmatic access to AWS services, including S3.
+
 ## Swagger api documentation endpoint
+
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)
 
 http://localhost:4000/api/docs
 

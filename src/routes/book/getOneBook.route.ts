@@ -1,7 +1,8 @@
 import { FastifyInstance } from 'fastify';
 
 import { getOneBook } from '@controllers/book/index';
-import { BookSchema } from '@/schema/book/book.schema';
+import { BookResponseSchema } from '@/schema/book/book.schema';
+import { ERROR404, ERROR500 } from '@/constants/response.constants';
 
 export async function getOneBookRoute(app: FastifyInstance) {
   /**
@@ -15,7 +16,16 @@ export async function getOneBookRoute(app: FastifyInstance) {
       summary: 'Display a specific book based on id, accessible to unauthenticated users as well',
 
       response: {
-        200: BookSchema,
+        200: {
+          description: 'OK',
+          content: {
+            'application/json': {
+              schema: BookResponseSchema.omit({ id: true }),
+            },
+          },
+        },
+        404: ERROR404,
+        500: ERROR500,
       },
     },
 

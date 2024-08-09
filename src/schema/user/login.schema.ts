@@ -17,6 +17,15 @@ export const LoginBodySchema = z.object({
 
 /**
  * ========================================
+ *            Login 200 Response schema
+ * ========================================
+ */
+export const LoginResponseSchema = z.object({
+  userId: z.string().openapi({ example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' }),
+});
+
+/**
+ * ========================================
  *     Infer types for controllers in Typescript
  * ========================================
  */

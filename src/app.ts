@@ -5,6 +5,7 @@ import fastifyCors from '@fastify/cors';
 import fastifyCompress from '@fastify/compress';
 import rateLimit from '@fastify/rate-limit';
 import fastifyCookie from '@fastify/cookie';
+import fastifyMultipart from '@fastify/multipart';
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -19,6 +20,7 @@ import { fromError } from 'zod-validation-error';
 import { envConfig } from '@config/env.config';
 import corsConfig from '@config/cors.config';
 import loggerConfig from '@config/logger.config';
+import multipartConfig from '@config/multipart.config';
 
 import auth from '@plugins/auth';
 import initSwagger from '@plugins/swagger';
@@ -59,6 +61,7 @@ const main = async (): Promise<FastifyInstance> => {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
   });
+  await app.register(fastifyMultipart, multipartConfig);
 
   await app.register(auth);
   await app.register(initSwagger);

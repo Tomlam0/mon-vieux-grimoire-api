@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { FastifyRequest, FastifyReply } from 'fastify';
-
 import prisma from '@lib/prisma';
-import { Book } from '@schema/generated-schemas/index';
-
-type GetOneBookParams = {
-  id: Book['id'];
-};
+import { BookResponseSchema } from '@/schema/book/book.schema';
 
 /**
  * ========================================
@@ -14,7 +10,7 @@ type GetOneBookParams = {
  * ========================================
  */
 export const getOneBook = async (
-  req: FastifyRequest<{ Params: GetOneBookParams }>,
+  req: FastifyRequest<{ Params: { id: string } }>,
   res: FastifyReply
 ) => {
   try {
@@ -29,7 +25,10 @@ export const getOneBook = async (
       return;
     }
 
-    res.status(200).send(book);
+    // Validate the book data using Zod schema before sending it
+    const validatedBook = BookResponseSchema.parse(book);
+
+    res.status(200).send(validatedBook);
   } catch (error: any) {
     res.status(500).send({ error: error.message });
   }

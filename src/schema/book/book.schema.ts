@@ -2,7 +2,8 @@ import { z, TypeOf } from 'zod';
 
 import { RatingSchema } from './rating.schema';
 
-const currentYear = new Date().getFullYear();
+const CURRENT_YEAR = new Date().getFullYear();
+const MIME_TYPE = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 /**
  * ========================================
@@ -28,13 +29,31 @@ export const BookSchema = z.object({
     .number()
     .int()
     .min(-3000, { message: "L'année doit être un entier valide." })
-    .max(currentYear, { message: "L'année ne peut pas être dans le futur." }),
+    .max(CURRENT_YEAR, { message: "L'année ne peut pas être dans le futur." }),
 
-  imageUrl: z.string().url({ message: "L'URL de l'image doit être valide." }).max(2048, {
-    message: "L'URL de l'image ne peut pas dépasser 2048 caractères.",
+  image: z.object({
+    filename: z.string(),
+    size: z.number().max(2000000, { message: "La taille maximale de l'image est de 2MB." }),
+    mimetype: z
+      .string()
+      .refine(
+        (type) => MIME_TYPE.includes(type),
+        'Seuls les formats .jpg, .jpeg, .png et .webp sont supportés.'
+      ),
+    buffer: z.instanceof(Buffer).or(z.string()),
   }),
 
-  ratings: z.array(RatingSchema).default([]),
+  ratings: z.array(RatingSchema),
+});
+
+/**
+ * ========================================
+ *  Book response schema (includes id and averageRating)
+ * ========================================
+ */
+export const BookResponseSchema = BookSchema.extend({
+  id: z.string().uuid(),
+  averageRating: z.number(),
 });
 
 /**

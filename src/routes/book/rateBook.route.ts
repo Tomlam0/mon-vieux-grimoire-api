@@ -15,7 +15,7 @@ export async function rateBookRoute(app: FastifyInstance) {
     schema: {
       tags: ['Book'],
       summary:
-        'Allow authenticated users to rate any book based on its id with a rating between 0 and 5 stars',
+        'Allow authenticated users to rate any book based on its id with a rating between 1 and 5 stars',
 
       security: [{ authToken: [] }],
 

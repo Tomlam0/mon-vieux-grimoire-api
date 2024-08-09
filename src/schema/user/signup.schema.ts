@@ -36,6 +36,15 @@ export const SignupSchema = z.object({
 
 /**
  * ========================================
+ *            Signup 201 Response schema
+ * ========================================
+ */
+export const SignupResponseSchema = z.object({
+  message: z.string().openapi({ example: 'Utilisateur créé !' }),
+});
+
+/**
+ * ========================================
  *     Infer types for controllers in Typescript
  * ========================================
  */
