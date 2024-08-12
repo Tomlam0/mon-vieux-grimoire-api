@@ -1,12 +1,16 @@
 import { PrismaClient } from '@prisma/client';
-import { FastifyInstance } from 'fastify';
-import loggerConfig from '@config/logger.config';
 
-const prisma = new PrismaClient();
+// Singleton pattern: Global declaration to avoid multiple instances in the development environment
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+
+const prisma = globalForPrisma.prisma || new PrismaClient();
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma; // Store the instance in a global variable during development
+}
 
 prisma.$connect().catch((error) => {
-  const logger = loggerConfig as FastifyInstance['log'];
-  logger.error('Failed to connect to the database:', error);
+  process.stderr.write(`Failed to connect to the database: ${error}\n`);
   process.exit(1);
 });
 

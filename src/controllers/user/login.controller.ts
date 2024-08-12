@@ -14,9 +14,14 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
   try {
     const { email, password } = req.body as LoginRequest;
 
-    // Find user with unique email
+    // Find user with unique email and select only useful colums to reduce compute time
     const user = await prisma.user.findUnique({
       where: { email },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+      },
     });
 
     // Verify if user exist on db
