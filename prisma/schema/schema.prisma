@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["prismaSchemaFolder"]
+  previewFeatures = ["prismaSchemaFolder", "driverAdapters"]
 }
 
 datasource db {
@@ -8,21 +8,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator zod {
-  provider = "zod-prisma-types"
-  output   = "../../src/schema/generated-schemas"
+// generator zod {
+//   provider = "zod-prisma-types"
+//   output   = "../../src/schema/generated-schemas"
 
-  useMultipleFiles = true //Generate folder for each model
-  writeBarrelFiles = true //Generate index for each folder
+//   useMultipleFiles = true //Generate folder for each model
+//   writeBarrelFiles = true //Generate index for each folder
 
-  createModelTypes = true // Generate model types
-  createInputTypes = true // Generate input types
+//   createModelTypes = true // Generate model types
+//   createInputTypes = true // Generate input types
 
-  addInputTypeValidation           = false // Add validation to the generated input types
-  addIncludeType                   = false // Add include types for Prisma relations
-  addSelectType                    = false // Add select types for Prisma relations
-  validateWhereUniqueInput         = false // Validate the whereUnique input types
-  createOptionalDefaultValuesTypes = false // Create types with optional default values
-  createRelationValuesTypes        = false // Create types that include relation fields
-  createPartialTypes               = false // Create types where all fields are optional
-}
+//   addInputTypeValidation           = false // Add validation to the generated input types
+//   addIncludeType                   = false // Add include types for Prisma relations
+//   addSelectType                    = false // Add select types for Prisma relations
+//   validateWhereUniqueInput         = false // Validate the whereUnique input types
+//   createOptionalDefaultValuesTypes = false // Create types with optional default values
+//   createRelationValuesTypes        = false // Create types that include relation fields
+//   createPartialTypes               = false // Create types where all fields are optional
+// }

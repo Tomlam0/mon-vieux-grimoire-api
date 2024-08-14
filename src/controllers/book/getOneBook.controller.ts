@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { FastifyRequest, FastifyReply } from 'fastify';
-import prisma from '@lib/prisma';
 import { BookResponseSchema } from '@/schema/book/book.schema';
 
 /**
@@ -14,7 +13,7 @@ export const getOneBook = async (
   res: FastifyReply
 ) => {
   try {
-    const book = await prisma.book.findUnique({
+    const book = await req.server.prisma.book.findUnique({
       where: {
         id: req.params.id,
       },

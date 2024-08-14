@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
@@ -10,7 +10,7 @@ import {
 } from 'fastify-zod-openapi';
 import { type ZodOpenApiVersion } from 'zod-openapi';
 
-const initSwagger = async (app: FastifyInstance) => {
+const initSwagger: FastifyPluginAsync = async (app) => {
   if (process.env.ENABLE_SWAGGER === 'true') {
     /**
      * ========================================

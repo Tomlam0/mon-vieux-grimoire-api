@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
-import prisma from '@lib/prisma';
 import { LoginRequest } from '@schema/user/index';
 
 /**
@@ -15,7 +15,7 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
     const { email, password } = req.body as LoginRequest;
 
     // Find user with unique email and select only useful colums to reduce compute time
-    const user = await prisma.user.findUnique({
+    const user = await req.server.prisma.user.findUnique({
       where: { email },
       select: {
         id: true,

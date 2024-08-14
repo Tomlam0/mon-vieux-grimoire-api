@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import fp from 'fastify-plugin';
 import jwt from '@fastify/jwt';
 
@@ -6,7 +6,7 @@ interface JwtPayload {
   userId: string;
 }
 
-const auth = async (app: FastifyInstance) => {
+const auth: FastifyPluginAsync = async (app) => {
   app.register(jwt, {
     secret: process.env.JWT_SECRET_KEY!,
   });

@@ -3,7 +3,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
-import prisma from '@lib/prisma';
 import { SignupRequest } from '@schema/user/signup.schema';
 
 /**
@@ -18,7 +17,7 @@ export const signup = async (req: FastifyRequest, res: FastifyReply) => {
     // Hash the password
     const hash = await bcrypt.hash(password, 10);
 
-    await prisma.user.create({
+    await req.server.prisma.user.create({
       data: {
         email,
         password: hash,

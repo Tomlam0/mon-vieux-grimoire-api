@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 
-import prisma from '@lib/prisma';
 import s3 from '@lib/s3';
 import { BookSchema } from '@/schema/book/book.schema';
 
@@ -53,7 +52,7 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
       averageRating: userInputData.ratings[0].grade,
     };
 
-    const newBook = await prisma.book.create({
+    const newBook = await req.server.prisma.book.create({
       data: newBookData,
       include: {
         ratings: true,

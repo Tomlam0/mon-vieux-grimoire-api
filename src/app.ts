@@ -22,6 +22,7 @@ import corsConfig from '@config/cors.config';
 import loggerConfig from '@config/logger.config';
 import multipartConfig from '@config/multipart.config';
 
+import prismaPlugin from '@plugins/prisma';
 import auth from '@plugins/auth';
 import initSwagger from '@plugins/swagger';
 
@@ -63,6 +64,7 @@ const main = async (): Promise<FastifyInstance> => {
   });
   await app.register(fastifyMultipart, multipartConfig);
 
+  await app.register(prismaPlugin);
   await app.register(auth);
   await app.register(initSwagger);
 

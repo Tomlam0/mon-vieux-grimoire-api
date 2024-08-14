@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FastifyRequest, FastifyReply } from 'fastify';
 
-import prisma from '@lib/prisma';
-
 /**
  * ========================================
  *        Display all books
@@ -10,7 +8,7 @@ import prisma from '@lib/prisma';
  */
 export const getAllBooks = async (req: FastifyRequest, res: FastifyReply) => {
   try {
-    const books = await prisma.book.findMany({
+    const books = await req.server.prisma.book.findMany({
       include: {
         ratings: true, // Include ratings in the results
       },
