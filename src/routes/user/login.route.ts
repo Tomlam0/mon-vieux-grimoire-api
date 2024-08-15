@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
 
-import { LoginBodySchema, LoginResponseSchema } from '@schema/user/index';
-import { login } from '@controllers/user/index';
-import { userRateLimitOptions } from '@config/ratelimit.config';
-import { ERROR401, ERROR500 } from '@constants/response.constants';
+import { LoginBodySchema, LoginResponseSchema } from '@/schema/user/index';
+import { login } from '@/controllers/user/index';
+import { userRateLimitOptions } from '@/config/ratelimit.config';
+import { ERROR401, ERROR500 } from '@/constants/response.constants';
 
 export async function loginRoute(app: FastifyInstance) {
   /**

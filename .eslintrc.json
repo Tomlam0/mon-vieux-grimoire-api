@@ -1,66 +1,54 @@
 {
-    "plugins": ["@typescript-eslint", "prettier", "zod-openapi","only-warn"],
-  
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "airbnb",
-      "airbnb-typescript",
-      "prettier",
-      "plugin:import/errors"
+  "plugins": ["@typescript-eslint", "prettier", "zod-openapi", "only-warn"],
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "prettier",
+    "plugin:import/errors"
+  ],
+
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
+  },
+
+  "parser": "@typescript-eslint/parser",
+
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "project": "tsconfig.json"
+  },
+
+  "rules": {
+    // Allows named exports even if there is only one export.
+    "import/prefer-default-export": "off",
+
+    // It is case insensitive to avoid issues with different file name cases.
+    "import/no-unresolved": 0,
+
+    // Allows imports without specifying .js, .jsx, .ts, or .tsx.
+    "import/extensions": "off",
+
+    // Allows variables that are declared but not used without causing an error.
+    "no-unused-vars": "off",
+
+    // Warns about unused variables in TypeScript files. Ignores variables starting with an underscore.
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+
+    // Warns if functions or classes are used before they are defined. Does not warn about variables used before they are defined.
+    "@typescript-eslint/no-use-before-define": [
+      "warn",
+      { "functions": true, "classes": true, "variables": false }
     ],
 
-    "settings": {
-      "import/resolver": {
-        "node": {
-          "extensions": [".js", ".jsx", ".ts", ".tsx"]
-        }
-      }
-    },
-  
-    "parser": "@typescript-eslint/parser",
-  
-    "parserOptions": {
-        "ecmaVersion": 2022,
-        "sourceType": "module",
-        "project": "tsconfig.json"
-      },
-      
-  
-    "rules": {
-      // Allows named exports even if there is only one export.
-      "import/prefer-default-export": "off",
-  
-      // It is case insensitive to avoid issues with different file name cases.
-      "import/no-unresolved": 0,
-  
-      // Allows imports without specifying .js, .jsx, .ts, or .tsx.
-      "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          "js": "never",
-          "ts": "never"
-        }
-      ],
-  
-      // Allows variables that are declared but not used without causing an error.
-      "no-unused-vars": "off",
-  
-      // Warns about unused variables in TypeScript files. Ignores variables starting with an underscore.
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { "argsIgnorePattern": "^_" }
-      ],
-  
-      // Warns if functions or classes are used before they are defined. Does not warn about variables used before they are defined.
-      "@typescript-eslint/no-use-before-define": [
-        "warn",
-        { "functions": true, "classes": true, "variables": false }
-      ],
-  
-      // Allows naming conventions that use underscores.
-      "no-underscore-dangle": "off"
-    }
+    // Allows naming conventions that use underscores.
+    "no-underscore-dangle": "off"
   }
-  
+}

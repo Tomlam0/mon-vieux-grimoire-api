@@ -17,17 +17,17 @@ import {
 } from 'fastify-zod-openapi';
 import { fromError } from 'zod-validation-error';
 
-import { envConfig } from '@config/env.config';
-import corsConfig from '@config/cors.config';
-import loggerConfig from '@config/logger.config';
-import multipartConfig from '@config/multipart.config';
+import { envConfig } from '@/config/env.config';
+import corsConfig from '@/config/cors.config';
+import loggerConfig from '@/config/logger.config';
+import multipartConfig from '@/config/multipart.config';
 
-import prismaPlugin from '@plugins/prisma';
-import auth from '@plugins/auth';
-import initSwagger from '@plugins/swagger';
+import prismaPlugin from '@/plugins/prisma';
+import auth from '@/plugins/auth';
+import initSwagger from '@/plugins/swagger';
 
-import bookRoutes from '@routes/book/index';
-import userRoutes from '@routes/user/index';
+import bookRoutes from '@/routes/book/index';
+import userRoutes from '@/routes/user/index';
 
 // Check if in development or production mode with .env files
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';

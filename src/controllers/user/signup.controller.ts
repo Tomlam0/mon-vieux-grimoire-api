@@ -3,7 +3,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
-import { SignupRequest } from '@schema/user/signup.schema';
+import { SignupRequest } from '@/schema/user/signup.schema';
 
 /**
  * ========================================

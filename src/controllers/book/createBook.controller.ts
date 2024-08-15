@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 
-import s3 from '@lib/s3';
+import s3 from '@/lib/s3';
 import { BookSchema } from '@/schema/book/book.schema';
 
 /**

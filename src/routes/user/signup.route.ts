@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
 
-import { SignupSchema, SignupResponseSchema } from '@schema/user/index';
-import { signup } from '@controllers/user/index';
-import { userRateLimitOptions } from '@config/ratelimit.config';
-import { ERROR400, ERROR500 } from '@constants/response.constants';
+import { SignupSchema, SignupResponseSchema } from '@/schema/user/index';
+import { signup } from '@/controllers/user/index';
+import { userRateLimitOptions } from '@/config/ratelimit.config';
+import { ERROR400, ERROR500 } from '@/constants/response.constants';
 
 export async function signupRoute(app: FastifyInstance) {
   /**

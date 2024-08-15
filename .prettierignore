@@ -31,9 +31,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# eslint
-.eslintrc.json
-
 # git
 .gitignore
 

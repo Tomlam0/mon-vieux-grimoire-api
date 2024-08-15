@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
-import { getBestBooks } from '@controllers/book/index';
+import { getBestBooks } from '@/controllers/book/index';
 import { BookArraySchema } from '@/schema/book/book.schema';
 
 export async function getBestBooksRoute(app: FastifyInstance) {

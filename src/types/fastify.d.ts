@@ -1,5 +1,5 @@
-import { EnvSchema } from '@config/env.config';
 import { PrismaClient } from '@prisma/client';
+import { EnvSchema } from '@/config/env.config';
 
 declare module 'fastify' {
   interface FastifyInstance {

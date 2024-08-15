@@ -1,9 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import * as dotenv from 'dotenv';
 
-dotenv.config();
-
 import { main } from '../src/app';
+
+dotenv.config();
 
 const startServerless = async () => {
   const app = await main();

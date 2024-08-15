@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
-import { getAllBooks } from '@controllers/book/index';
+import { getAllBooks } from '@/controllers/book/index';
 import { BookArraySchema } from '@/schema/book/book.schema';
 import { ERROR500 } from '@/constants/response.constants';
 

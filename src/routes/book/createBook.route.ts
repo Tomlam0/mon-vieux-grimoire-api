@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
-import { createBook } from '@controllers/book/index';
-import { userRateLimitOptions } from '@config/ratelimit.config';
+import { createBook } from '@/controllers/book/index';
+import { userRateLimitOptions } from '@/config/ratelimit.config';
 import { BookSchema, BookResponseSchema } from '@/schema/book/book.schema';
 import { ERROR400, ERROR500 } from '@/constants/response.constants';
 

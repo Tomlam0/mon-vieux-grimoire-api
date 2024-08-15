@@ -110,14 +110,6 @@ The aliases are defined in the tsconfig.json file as follows:
  "baseUrl": "./src",
  "paths":
    "@/*": ["*"],
-   "@config/*": ["config/*"],
-   "@constants/*": ["constants/*"],
-   "@controllers/*": ["controllers/*"],
-   "@lib/*": ["lib/*"],
-   "@plugins/*": ["plugins/*"],
-   "@routes/*": ["routes/*"],
-   "@schema/*": ["schema/*"],
-   "@types/*": ["types/*"]
 ```
 
 These aliases allow you to import modules using the @ prefix instead of relative paths.
