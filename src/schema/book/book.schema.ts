@@ -7,7 +7,7 @@ const MIME_TYPE = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 /**
  * ========================================
- *        Add new book schema
+ *        Book creation schema (text fields only)
  * ========================================
  */
 export const BookSchema = z.object({
@@ -31,37 +31,53 @@ export const BookSchema = z.object({
     .min(-3000, { message: "L'année doit être un entier valide." })
     .max(CURRENT_YEAR, { message: "L'année ne peut pas être dans le futur." }),
 
-  image: z.object({
-    filename: z.string(),
-    size: z.number().max(2000000, { message: "La taille maximale de l'image est de 2MB." }),
-    mimetype: z
-      .string()
-      .refine(
-        (type) => MIME_TYPE.includes(type),
-        'Seuls les formats .jpg, .jpeg, .png et .webp sont supportés.'
-      ),
-    buffer: z.instanceof(Buffer).or(z.string()),
-  }),
-
-  ratings: z.array(RatingSchema),
+  ratings: z.array(RatingSchema).nonempty({ message: 'Au moins une évaluation est requise.' }),
 });
 
 /**
  * ========================================
- *  Book response schema (includes id and averageRating)
+ *      Image schema (for file validation)
+ * ========================================
+ */
+export const ImageValidationSchema = z.object({
+  filename: z.string(),
+  size: z.number().max(2000000, { message: "La taille maximale de l'image est de 2MB." }),
+  mimetype: z
+    .string()
+    .refine(
+      (type) => MIME_TYPE.includes(type),
+      'Seuls les formats .jpg, .jpeg, .png et .webp sont supportés.'
+    ),
+  buffer: z.instanceof(Buffer),
+});
+
+/**
+ * ========================================
+ *  Combined book request validation schema (multipart)
+ * ========================================
+ */
+export const BookMultipartSchema = z.object({
+  body: BookSchema,
+  file: ImageValidationSchema,
+});
+
+/**
+ * ========================================
+ *  Book response schema (includes id, imageurl and averageRating)
  * ========================================
  */
 export const BookResponseSchema = BookSchema.extend({
   id: z.string().uuid(),
+  imageUrl: z.string(),
   averageRating: z.number(),
 });
 
 /**
  * ========================================
- *        Schema for the entire collection
+ *  Schema for an array of books (used for retrieving all books)
  * ========================================
  */
-export const BookArraySchema = z.array(BookSchema);
+export const BookArraySchema = z.array(BookResponseSchema);
 
 /**
  * ========================================

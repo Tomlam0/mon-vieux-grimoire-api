@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 
 import { createBook } from '@/controllers/book/index';
 import { userRateLimitOptions } from '@/config/ratelimit.config';
-import { BookSchema, BookResponseSchema } from '@/schema/book/book.schema';
+import { BookResponseSchema } from '@/schema/book/book.schema';
 import { ERROR400, ERROR500 } from '@/constants/response.constants';
 
 export async function createBookRoute(app: FastifyInstance) {
@@ -21,7 +21,6 @@ export async function createBookRoute(app: FastifyInstance) {
       security: [{ authToken: [] }],
 
       consumes: ['multipart/form-data'],
-      body: BookSchema,
 
       response: {
         201: {
