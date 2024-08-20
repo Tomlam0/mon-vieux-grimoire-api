@@ -198,9 +198,12 @@ This user should have the `AmazonS3FullAccess` permission, or you can create a c
 
 After creating the IAM user, generate a set of access keys for programmatic access to AWS services, including S3.
 
-## Swagger api documentation endpoint
+## Swagger api documentation
 
 ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)
+
+This project leverages Zod for schema validation and uses these schemas, along with route files, to define the OpenAPI documentation.  
+The Zod schemas ensure that the request and response data structures are correctly validated and documented, providing a clear and accurate API specification.
 
 http://localhost:4000/api/docs
 

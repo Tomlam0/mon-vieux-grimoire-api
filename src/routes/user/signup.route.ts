@@ -12,6 +12,7 @@ export async function signupRoute(app: FastifyInstance) {
    * ========================================
    */
   app.post('/signup', {
+    // Openapi doc
     schema: {
       tags: ['User'],
       summary: 'Create a new user account in database',

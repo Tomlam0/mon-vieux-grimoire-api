@@ -14,6 +14,7 @@ export async function logoutRoute(app: FastifyInstance) {
   app.post('/logout', {
     preValidation: [app.auth],
 
+    // Openapi doc
     schema: {
       tags: ['User'],
       summary: 'Disconnect user and delete the cookie',

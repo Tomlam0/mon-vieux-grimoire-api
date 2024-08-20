@@ -1,4 +1,4 @@
-import Fastify, { FastifyError, FastifyInstance } from 'fastify';
+import Fastify, { FastifyInstance } from 'fastify';
 import fastifyEnv from '@fastify/env';
 import fastifyHelmet from '@fastify/helmet';
 import fastifyCors from '@fastify/cors';
@@ -15,13 +15,13 @@ import {
   validatorCompiler,
   type FastifyZodOpenApiTypeProvider,
 } from 'fastify-zod-openapi';
-import { fromError } from 'zod-validation-error';
 
 import { envConfig } from '@/config/env.config';
 import corsConfig from '@/config/cors.config';
 import loggerConfig from '@/config/logger.config';
 import multipartConfig from '@/config/multipart.config';
 
+import errorHandler from '@/plugins/errorHandler';
 import prismaPlugin from '@/plugins/prisma';
 import auth from '@/plugins/auth';
 import initSwagger from '@/plugins/swagger';
@@ -69,6 +69,7 @@ const main = async (): Promise<FastifyInstance> => {
   await app.register(auth);
   await app.register(initSwagger);
   await app.register(s3Plugin);
+  await app.register(errorHandler);
 
   /**
    * ========================================
@@ -80,31 +81,6 @@ const main = async (): Promise<FastifyInstance> => {
   app.register(async () => {
     await app.register(fastifyCompress);
     app.register(userRoutes, { prefix: '/api/auth' });
-  });
-
-  /**
-   * ========================================
-   *            Error handler
-   * ========================================
-   */
-  app.setErrorHandler((error: FastifyError, req, res) => {
-    // Change message from rate limit error
-    if (error.statusCode === 429) {
-      res.code(429).send({
-        statusCode: 429,
-        error: 'Trop de requêtes',
-        message: 'Vous avez atteint la limite de requêtes ! Veuillez réessayer dans 1 minute.',
-      });
-      return;
-    }
-    // Zod errors handler
-    try {
-      const validationError = fromError(error);
-      res.status(400).send(validationError);
-    } catch {
-      app.log.error(error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
-    }
   });
 
   return app;

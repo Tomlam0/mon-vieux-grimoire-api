@@ -12,6 +12,7 @@ export async function rateBookRoute(app: FastifyInstance) {
   app.post('/:id/rating', {
     preValidation: [app.auth],
 
+    // Openapi doc
     schema: {
       tags: ['Book'],
       summary:

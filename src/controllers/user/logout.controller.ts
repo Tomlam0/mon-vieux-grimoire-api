@@ -7,16 +7,12 @@ import { FastifyRequest, FastifyReply } from 'fastify';
  * ========================================
  */
 export const logout = async (req: FastifyRequest, res: FastifyReply) => {
-  try {
-    res.clearCookie('authToken', {
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none',
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-    });
+  res.clearCookie('authToken', {
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+  });
 
-    res.status(200).send({ message: 'Déconnexion réussie' });
-  } catch (error: any) {
-    res.status(500).send({ error: error.message });
-  }
+  res.status(200).send({ message: 'Déconnexion réussie' });
 };

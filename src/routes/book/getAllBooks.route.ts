@@ -2,7 +2,6 @@ import { FastifyInstance } from 'fastify';
 
 import { getAllBooks } from '@/controllers/book/index';
 import { BookArraySchema } from '@/schema/book/book.schema';
-import { ERROR500 } from '@/constants/response.constants';
 
 export async function getAllBooksRoute(app: FastifyInstance) {
   /**
@@ -11,6 +10,7 @@ export async function getAllBooksRoute(app: FastifyInstance) {
    * ========================================
    */
   app.get('/', {
+    // Openapi doc
     schema: {
       tags: ['Book'],
       summary:
@@ -25,7 +25,6 @@ export async function getAllBooksRoute(app: FastifyInstance) {
             },
           },
         },
-        500: ERROR500,
       },
     },
 

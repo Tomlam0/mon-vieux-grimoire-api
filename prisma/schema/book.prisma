@@ -2,7 +2,7 @@ model Book {
   id            String   @id @default(uuid())
   userId        String
   user          User     @relation(fields: [userId], references: [id])
-  title         String
+  title         String   @unique
   author        String
   imageUrl      String
   year          Int

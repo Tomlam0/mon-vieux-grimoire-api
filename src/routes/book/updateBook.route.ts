@@ -12,6 +12,7 @@ export async function updateBookRoute(app: FastifyInstance) {
   app.put('/:id', {
     preValidation: [app.auth],
 
+    // Openapi doc
     schema: {
       tags: ['Book'],
       summary: 'Allows only the user who added the book to update it based on its id.',

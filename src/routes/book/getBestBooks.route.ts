@@ -10,6 +10,7 @@ export async function getBestBooksRoute(app: FastifyInstance) {
    * ========================================
    */
   app.get('/bestrating', {
+    // Openapi doc
     schema: {
       tags: ['Book'],
       summary: 'Display the 3 best rated books, accessible to unauthenticated users as well',

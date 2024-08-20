@@ -12,6 +12,7 @@ export async function deleteBookRoute(app: FastifyInstance) {
   app.delete('/:id', {
     preValidation: [app.auth],
 
+    // Openapi doc
     schema: {
       tags: ['Book'],
       summary: 'Allows only the user who added the book to delete it based on its id.',

@@ -12,6 +12,7 @@ export async function loginRoute(app: FastifyInstance) {
    * ========================================
    */
   app.post('/login', {
+    // Openapi doc
     schema: {
       tags: ['User'],
       summary: 'Authenticate user and generate authToken in cookie',
