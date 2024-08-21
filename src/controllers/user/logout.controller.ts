@@ -14,5 +14,5 @@ export const logout = async (req: FastifyRequest, res: FastifyReply) => {
     path: '/',
   });
 
-  res.status(200).send({ message: 'Déconnexion réussie' });
+  res.status(200).send({ message: 'Logout successful' });
 };

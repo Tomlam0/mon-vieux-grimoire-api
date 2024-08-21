@@ -13,25 +13,26 @@ const MIME_TYPE = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 export const BookSchema = z.object({
   title: z
     .string()
-    .min(1, { message: 'Le titre ne peut pas être vide.' })
-    .max(255, { message: 'Le titre ne peut pas dépasser 255 caractères.' }),
+    .min(1, { message: 'The title cannot be empty.' })
+    .max(255, { message: 'The title cannot exceed 255 characters.' }),
 
-  author: z.string().min(1, { message: "L'auteur ne peut pas être vide." }).max(255, {
-    message: "Le nom de l'auteur ne peut pas dépasser 255 caractères.",
-  }),
+  author: z
+    .string()
+    .min(1, { message: 'The author cannot be empty.' })
+    .max(255, { message: 'The author name cannot exceed 255 characters.' }),
 
   genre: z
     .string()
-    .min(1, { message: 'Le genre ne peut pas être vide.' })
-    .max(100, { message: 'Le genre ne peut pas dépasser 100 caractères.' }),
+    .min(1, { message: 'The genre cannot be empty.' })
+    .max(100, { message: 'The genre cannot exceed 100 characters.' }),
 
   year: z
     .number()
     .int()
-    .min(-3000, { message: "L'année doit être un entier valide." })
-    .max(CURRENT_YEAR, { message: "L'année ne peut pas être dans le futur." }),
+    .min(-3000, { message: 'The year must be a valid integer.' })
+    .max(CURRENT_YEAR, { message: 'The year cannot be in the future.' }),
 
-  ratings: z.array(RatingSchema).nonempty({ message: 'Au moins une évaluation est requise.' }),
+  ratings: z.array(RatingSchema).nonempty({ message: 'At least one rating is required.' }),
 });
 
 /**
@@ -41,12 +42,12 @@ export const BookSchema = z.object({
  */
 export const ImageValidationSchema = z.object({
   filename: z.string(),
-  size: z.number().max(2000000, { message: "La taille maximale de l'image est de 2MB." }),
+  size: z.number().max(2000000, { message: 'The maximum image size is 2MB.' }),
   mimetype: z
     .string()
     .refine(
       (type) => MIME_TYPE.includes(type),
-      'Seuls les formats .jpg, .jpeg, .png et .webp sont supportés.'
+      'Only .jpg, .jpeg, .png, and .webp formats are supported.'
     ),
   buffer: z.instanceof(Buffer),
 });

@@ -23,9 +23,7 @@ const auth: FastifyPluginAsync = async (app) => {
       req.user = decoded.userId;
     } catch (err) {
       res.status(401).send({
-        statusCode: 401,
-        error: 'Unauthorized',
-        message: 'Accès refusé. Veuillez vous connecter.',
+        message: 'Access denied. Please log in.',
       });
     }
   });

@@ -1,71 +1,33 @@
 import { z } from 'zod';
 
-const ErrorSchema = z.object({
-  message: z.string(),
-});
-
-export const ERROR400 = {
-  description: 'Bad request',
-  content: {
-    'application/json': {
-      schema: ErrorSchema.openapi({
-        example: { message: 'Invalid request parameters' },
-      }),
+const generateResponseSchema =
+  (statusCode: number, resTitle: string) => (customMessage?: string) => ({
+    description: resTitle,
+    content: {
+      'application/json': {
+        schema: z
+          .object({
+            message: z.string().optional(),
+          })
+          .openapi({
+            example: {
+              message: customMessage || resTitle,
+            },
+          }),
+      },
     },
-  },
-};
+  });
 
-export const ERROR401 = {
-  description: 'Unauthorized',
-  content: {
-    'application/json': {
-      schema: ErrorSchema.openapi({
-        example: { message: 'Unauthorized access' },
-      }),
-    },
-  },
-};
+// ERRORS
+export const ERROR400 = (message?: string) => generateResponseSchema(400, 'Bad Request')(message);
 
-export const ERROR403 = {
-  description: 'Forbidden Request',
-  content: {
-    'application/json': {
-      schema: ErrorSchema.openapi({
-        example: { message: 'Forbidden request' },
-      }),
-    },
-  },
-};
+export const ERROR401 = (message?: string) => generateResponseSchema(401, 'Unauthorized')(message);
 
-export const ERROR404 = {
-  description: 'Not found',
-  content: {
-    'application/json': {
-      schema: ErrorSchema.openapi({
-        example: { message: 'Resource not found' },
-      }),
-    },
-  },
-};
+export const ERROR403 = (message?: string) => generateResponseSchema(403, 'Forbidden')(message);
 
-export const ERROR409 = {
-  description: 'Conflict',
-  content: {
-    'application/json': {
-      schema: ErrorSchema.openapi({
-        example: { message: 'Resource conflict' },
-      }),
-    },
-  },
-};
+export const ERROR404 = (message?: string) => generateResponseSchema(404, 'Not Found')(message);
 
-export const ERROR500 = {
-  description: 'Internal Server Error',
-  content: {
-    'application/json': {
-      schema: ErrorSchema.openapi({
-        example: { message: 'Internal server error' },
-      }),
-    },
-  },
-};
+export const ERROR409 = (message?: string) => generateResponseSchema(409, 'Conflict')(message);
+
+export const ERROR500 = (message?: string) =>
+  generateResponseSchema(500, 'Internal Server Error')(message);

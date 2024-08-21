@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { FastifyPluginAsync, FastifyRequest, FastifyReply, FastifyError } from 'fastify';
 import fastifySensible from '@fastify/sensible';
 import { ZodError } from 'zod';
@@ -20,23 +22,27 @@ const errorHandler: FastifyPluginAsync = async (app) => {
     }
 
     // Handle Zod validation errors
-    if (error instanceof ZodError) {
-      const formattedError = fromZodError(error);
+    if (
+      error instanceof ZodError ||
+      (error.code === 'FST_ERR_VALIDATION' &&
+        error.validationContext === 'body' &&
+        (error as any).zodError instanceof ZodError)
+    ) {
+      const zodErrorInstance = error instanceof ZodError ? error : (error as any).zodError;
+      const formattedError = fromZodError(zodErrorInstance);
+
       res.status(400).send({
-        error: 'Validation error',
         message: formattedError.message,
-        details: formattedError.details,
       });
       return;
     }
 
-    // Handle all other errors
-    app.log.error(error);
+    // Global server errors
     res.status(500).send({
       statusCode: 500,
       error: 'Internal Server Error',
       message: 'An error occurred on the server.',
-      details: error.message,
+      details: error,
     });
   });
 };

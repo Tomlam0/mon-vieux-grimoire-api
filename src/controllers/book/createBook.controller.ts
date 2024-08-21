@@ -76,7 +76,7 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
 
   if (count > 0) {
     return res.status(400).send({
-      error: 'A book with this title already exists. Please choose a different title.',
+      message: 'A book with this title already exists. Please choose a different title.',
     });
   }
 

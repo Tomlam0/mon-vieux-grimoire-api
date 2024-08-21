@@ -8,8 +8,8 @@ import { z, TypeOf } from 'zod';
 export const RatingSchema = z.object({
   grade: z
     .number()
-    .min(1, { message: 'La note doit être au moins 1.' })
-    .max(5, { message: 'La note doit être au plus 5.' }),
+    .min(1, { message: 'The rating must be at least 1.' })
+    .max(5, { message: 'The rating must be at most 5.' }),
 });
 
 /**

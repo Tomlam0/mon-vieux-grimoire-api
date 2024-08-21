@@ -8,29 +8,29 @@ import { z, TypeOf } from 'zod';
 export const SignupSchema = z.object({
   // Email
   email: z.string().email({
-    message: "L'adresse e-mail saisie n'est pas valide. Veuillez vérifier et essayer à nouveau.",
+    message: 'The email address provided is not valid. Please check and try again.',
   }),
 
   // Password
   password: z
     .string()
     .min(8, {
-      message: 'Le mot de passe doit contenir au moins 8 caractères.',
+      message: 'The password must be at least 8 characters long.',
     })
     .refine((value) => /[a-z]/.test(value), {
-      message: 'Le mot de passe doit contenir au moins une lettre minuscule.',
+      message: 'The password must contain at least one lowercase letter.',
     })
     .refine((value) => /[A-Z]/.test(value), {
-      message: 'Le mot de passe doit contenir au moins une lettre majuscule.',
+      message: 'The password must contain at least one uppercase letter.',
     })
     .refine((value) => /\d/.test(value), {
-      message: 'Le mot de passe doit contenir au moins un chiffre.',
+      message: 'The password must contain at least one digit.',
     })
     .refine((value) => /[@$!%*?&#]/.test(value), {
-      message: 'Le mot de passe doit contenir au moins un caractère spécial.',
+      message: 'The password must contain at least one special character.',
     })
     .refine((value) => !/\s/.test(value), {
-      message: "Le mot de passe ne doit pas contenir d'espaces.",
+      message: 'The password must not contain spaces.',
     }),
 });
 
@@ -40,7 +40,7 @@ export const SignupSchema = z.object({
  * ========================================
  */
 export const SignupResponseSchema = z.object({
-  message: z.string().openapi({ example: 'Utilisateur créé !' }),
+  message: z.string().openapi({ example: 'User created!' }),
 });
 
 /**

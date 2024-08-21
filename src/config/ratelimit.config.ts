@@ -5,9 +5,7 @@ export const userRateLimitOptions = {
     timeWindow: '1 minute',
     errorResponseBuilder: () => ({
       statusCode: 429,
-      error: 'Trop de requêtes',
-      message:
-        'Vous avez atteint la limite de créations de comptes ! Veuillez réessayer dans 1 minute.',
+      message: 'You have reached the login attempt limit! Please try again in 1 minute.',
     }),
   },
 
@@ -17,9 +15,7 @@ export const userRateLimitOptions = {
     timeWindow: '1 minute',
     errorResponseBuilder: () => ({
       statusCode: 429,
-      error: 'Trop de requêtes',
-      message:
-        'Vous avez atteint la limite de tentatives de connexion ! Veuillez réessayer dans 1 minute.',
+      message: 'You have reached the login attempt limit! Please try again in 1 minute.',
     }),
   },
 
@@ -29,9 +25,7 @@ export const userRateLimitOptions = {
     timeWindow: '1 minute',
     errorResponseBuilder: () => ({
       statusCode: 429,
-      error: 'Trop de requêtes',
-      message:
-        "Vous avez atteint la limite d'ajout de nouveau livre ! Veuillez réessayer dans 1 minute.",
+      message: 'You have reached the login attempt limit! Please try again in 1 minute.',
     }),
   },
 };

@@ -6,5 +6,5 @@ import { z } from 'zod';
  * ========================================
  */
 export const LogoutResponseSchema = z.object({
-  message: z.string().openapi({ example: 'Déconnexion réussie' }),
+  message: z.string().openapi({ example: 'Logout successful' }),
 });

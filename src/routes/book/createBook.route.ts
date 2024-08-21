@@ -3,6 +3,7 @@ import { FastifyInstance } from 'fastify';
 import { createBook } from '@/controllers/book/index';
 import { userRateLimitOptions } from '@/config/ratelimit.config';
 import { BookResponseSchema } from '@/schema/book/book.schema';
+import { ERROR400 } from '@/constants/response.constants';
 
 export async function createBookRoute(app: FastifyInstance) {
   /**
@@ -25,7 +26,8 @@ export async function createBookRoute(app: FastifyInstance) {
         This endpoint expects a multipart/form-data request because the book details and an image file need to be uploaded together.
 
         The creation of a new book involves not just text data but also the upload of an image file.
-        Since Fastify, combined with Zod, enforces strict validation of request data, using multipart/form-data allows us to handle both the text fields and the binary image data in a single request.
+        Since Fastify, combined with Zod, enforces strict validation of request data, using multipart/form-data allows us to handle
+        both the text fields and the binary image data in a single request.
 
         The image file will be uploaded to Amazon S3, and the resulting URL will be stored in the database alongside the other book details.
 
@@ -47,6 +49,7 @@ export async function createBookRoute(app: FastifyInstance) {
             },
           },
         },
+        400: ERROR400('A book with this title already exists. Please choose a different title.'),
       },
     },
 

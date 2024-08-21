@@ -3,7 +3,7 @@ import { FastifyInstance } from 'fastify';
 import { LoginBodySchema, LoginResponseSchema } from '@/schema/user/index';
 import { login } from '@/controllers/user/index';
 import { userRateLimitOptions } from '@/config/ratelimit.config';
-import { ERROR401, ERROR500 } from '@/constants/response.constants';
+import { ERROR401 } from '@/constants/response.constants';
 
 export async function loginRoute(app: FastifyInstance) {
   /**
@@ -28,8 +28,7 @@ export async function loginRoute(app: FastifyInstance) {
             },
           },
         },
-        401: ERROR401,
-        500: ERROR500,
+        401: ERROR401('Invalid email or password. Please try again.'),
       },
     },
 

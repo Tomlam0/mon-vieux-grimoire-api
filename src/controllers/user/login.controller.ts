@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 
@@ -13,7 +12,7 @@ import { LoginRequest } from '@/schema/user/index';
 export const login = async (req: FastifyRequest, res: FastifyReply) => {
   const { email, password } = req.body as LoginRequest;
 
-  // Find user with unique email and select only useful colums to reduce compute time
+  // Find user with unique email and select only useful columns to reduce compute time
   const user = await req.server.prisma.user.findUnique({
     where: { email },
     select: {
@@ -23,22 +22,13 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
     },
   });
 
-  // Verify if user exist on db
-  if (!user) {
-    await res.status(401).send({
-      message: 'Paire identifiant / mot de passe incorrect',
-    });
-    return;
-  }
-
-  // Compare password
-  const valid = await bcrypt.compare(password, user.password);
+  // Compare password only if user exists in db
+  const valid = user && (await bcrypt.compare(password, user.password));
 
   if (!valid) {
-    await res.status(401).send({
-      message: 'Paire identifiant / mot de passe incorrect',
+    return res.status(401).send({
+      message: 'Invalid email or password. Please try again.',
     });
-    return;
   }
 
   // Generate JWT with userId in payload
@@ -46,13 +36,13 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
 
   res.setCookie('authToken', token, {
     httpOnly: true, // Set httpOnly to avoid XSS attack, cookie only accessible by fetch
-    sameSite: process.env.NODE_ENV === 'production' ? ('lax' as const) : ('none' as const), // Protect against CSRF
+    sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none', // Protect against CSRF
     secure: process.env.NODE_ENV === 'production', // Ensure secure flag is set in production
     maxAge: 4 * 60 * 60, // 4 hours
     path: '/',
   });
 
-  await res.status(200).send({
+  return res.status(200).send({
     userId: user.id,
   });
 };
