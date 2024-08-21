@@ -46,11 +46,25 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
     }
   }
 
+  /**
+   * Normalize a field by trimming, removing diacritics, converting to lowercase,
+   * and capitalizing the first letter of each word.
+   */
+  const normalizeField = (field: string): string =>
+    field
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
   // Construct the input data object from the retrieved fields
   const userInputData = {
-    title: fields.title,
-    author: fields.author,
-    genre: fields.genre,
+    title: normalizeField(fields.title),
+    author: normalizeField(fields.author),
+    genre: normalizeField(fields.genre),
     year: parseInt(fields.year, 10),
     ratings: [
       {
