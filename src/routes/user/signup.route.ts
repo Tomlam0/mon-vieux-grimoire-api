@@ -15,7 +15,7 @@ export async function signupRoute(app: FastifyInstance) {
     // Openapi doc
     schema: {
       tags: ['User'],
-      summary: 'Create a new user account in database',
+      summary: 'Create a new user account and send email confirmation',
 
       body: SignupSchema,
 

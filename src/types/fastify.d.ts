@@ -6,6 +6,7 @@ declare module 'fastify' {
   interface FastifyInstance {
     prisma: PrismaClient;
     s3: S3Client;
+    mailer: nodemailer.Transporter;
     // Holds configuration values loaded from environment variables.
     config: EnvSchema;
     // auth is used to verify JWT tokens and handle authentication.

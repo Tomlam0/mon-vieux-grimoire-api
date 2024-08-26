@@ -49,7 +49,9 @@ export const SignupSchema = z.object({
  * ========================================
  */
 export const SignupResponseSchema = z.object({
-  message: z.string().openapi({ example: 'User created!' }),
+  message: z.string().openapi({
+    example: 'A confirmation email has been sent. Please check your email to confirm your account.',
+  }),
 });
 
 /**

@@ -26,6 +26,7 @@ import prismaPlugin from '@/plugins/prisma';
 import auth from '@/plugins/auth';
 import initSwagger from '@/plugins/swagger';
 import s3Plugin from '@/plugins/s3';
+import nodemailerPlugin from '@/plugins/nodemailer';
 
 import bookRoutes from '@/routes/book/index';
 import userRoutes from '@/routes/user/index';
@@ -67,6 +68,7 @@ const main = async (): Promise<FastifyInstance> => {
 
   await app.register(prismaPlugin);
   await app.register(auth);
+  await app.register(nodemailerPlugin);
   await app.register(initSwagger);
   await app.register(s3Plugin);
   await app.register(errorHandler);
