@@ -33,5 +33,7 @@ export const confirmSignup = async (req: FastifyRequest, res: FastifyReply) => {
     },
   });
 
-  res.status(201).send({ message: 'Your account has been created !' });
+  res.status(201).send({
+    message: 'Your account has been created! Please login using your credentials.',
+  });
 };

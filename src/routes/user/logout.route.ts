@@ -1,8 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
-import { LogoutResponseSchema } from '@/schema/user/logout.schema';
 import { logout } from '@/controllers/user/index';
-import { ERROR401 } from '@/constants/response.constants';
+import { SUCCESS200, ERROR401 } from '@/constants/response.constants';
 
 export async function logoutRoute(app: FastifyInstance) {
   // JWT is set on a cookie so we need to delete the cookie from backend on user logout
@@ -22,14 +21,7 @@ export async function logoutRoute(app: FastifyInstance) {
       security: [{ authToken: [] }],
 
       response: {
-        200: {
-          description: 'OK',
-          content: {
-            'application/json': {
-              schema: LogoutResponseSchema,
-            },
-          },
-        },
+        200: SUCCESS200('Logout successful'),
         401: ERROR401('Access denied. Please log in.'),
       },
     },

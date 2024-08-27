@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
 
-import { SignupSchema, SignupResponseSchema } from '@/schema/user/index';
+import { SignupSchema } from '@/schema/user/index';
 import { signup } from '@/controllers/user/index';
+import { SUCCESS201, ERROR400 } from '@/constants/response.constants';
 import { userRateLimitOptions } from '@/config/ratelimit.config';
-import { ERROR400 } from '@/constants/response.constants';
 
 export async function signupRoute(app: FastifyInstance) {
   /**
@@ -20,14 +20,9 @@ export async function signupRoute(app: FastifyInstance) {
       body: SignupSchema,
 
       response: {
-        201: {
-          description: 'Created',
-          content: {
-            'application/json': {
-              schema: SignupResponseSchema,
-            },
-          },
-        },
+        201: SUCCESS201(
+          'A confirmation email has been sent. Please check your email to confirm your account.'
+        ),
         400: ERROR400('Invalid credentials or account already exists.'),
       },
     },

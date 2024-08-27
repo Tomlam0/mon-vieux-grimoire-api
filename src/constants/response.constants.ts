@@ -18,6 +18,11 @@ const generateResponseSchema =
     },
   });
 
+// SUCCESS
+export const SUCCESS200 = (message?: string) => generateResponseSchema(200, 'OK')(message);
+
+export const SUCCESS201 = (message?: string) => generateResponseSchema(201, 'Created')(message);
+
 // ERRORS
 export const ERROR400 = (message?: string) => generateResponseSchema(400, 'Bad Request')(message);
 
