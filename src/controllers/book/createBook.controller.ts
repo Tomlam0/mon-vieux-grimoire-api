@@ -6,7 +6,7 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp';
 
-import { BookMultipartSchema, BookResponseSchema } from '@/schema/book/book.schema';
+import { BookSchema, BookResponseSchema } from '@/schema/book/book.schema';
 
 /**
  * ========================================
@@ -74,20 +74,16 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
         grade: parseInt(fields['ratings[0][grade]'], 10),
       },
     ],
+    file: fileInfo,
   };
 
-  // Validate the text fields with Zod
-  BookMultipartSchema.shape.body.parse(userInputData);
-
-  // Validate the file with Zod
-  if (fileInfo) {
-    BookMultipartSchema.shape.file.parse(fileInfo);
-  }
+  // Validate with Zod
+  const validatedData = BookSchema.parse(userInputData);
 
   // Check for duplicate book title
   const count = await req.server.prisma.book.count({
     where: {
-      title: userInputData.title,
+      title: validatedData.title,
     },
   });
 
@@ -98,15 +94,15 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
   }
 
   // Generate a unique key for the image in S3
-  const imageKey = `${uuidv4()}-${fileInfo.filename}`;
+  const imageKey = `${uuidv4()}-${validatedData.file.filename}`;
 
   // Upload the image to S3
   await req.server.s3.send(
     new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: imageKey,
-      Body: fileInfo.buffer,
-      ContentType: fileInfo.mimetype,
+      Body: validatedData.file.buffer,
+      ContentType: validatedData.file.mimetype,
       ACL: 'public-read', // Makes the file public
     })
   );
@@ -115,17 +111,20 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
 
   // Prepare the data for the new book, including the imageUrl and userId
   const newBookData = {
-    ...userInputData,
+    title: validatedData.title,
+    author: validatedData.author,
+    genre: validatedData.genre,
+    year: validatedData.year,
     userId: req.user as string,
     imageUrl,
     ratings: {
-      create: userInputData.ratings.map((rating) => ({
+      create: validatedData.ratings.map((rating) => ({
         ...rating,
         userId: req.user as string,
       })),
     },
     // Initialize averageRating to the initial rating, since it's the only rating
-    averageRating: userInputData.ratings[0].grade,
+    averageRating: validatedData.ratings[0].grade,
   };
 
   const newBook = await req.server.prisma.book.create({

@@ -7,7 +7,7 @@ const MIME_TYPE = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 /**
  * ========================================
- *        Book creation schema (text fields only)
+ *        Book input schema
  * ========================================
  */
 export const BookSchema = z.object({
@@ -33,33 +33,18 @@ export const BookSchema = z.object({
     .max(CURRENT_YEAR, { message: 'The year cannot be in the future.' }),
 
   ratings: z.array(RatingSchema).nonempty({ message: 'At least one rating is required.' }),
-});
 
-/**
- * ========================================
- *      Image schema (for file validation)
- * ========================================
- */
-export const ImageValidationSchema = z.object({
-  filename: z.string(),
-  size: z.number().max(2000000, { message: 'The maximum image size is 2MB.' }),
-  mimetype: z
-    .string()
-    .refine(
-      (type) => MIME_TYPE.includes(type),
-      'Only .jpg, .jpeg, .png, and .webp formats are supported.'
-    ),
-  buffer: z.instanceof(Buffer),
-});
-
-/**
- * ========================================
- *  Combined book request validation schema (multipart)
- * ========================================
- */
-export const BookMultipartSchema = z.object({
-  body: BookSchema,
-  file: ImageValidationSchema,
+  file: z.object({
+    filename: z.string(),
+    size: z.number().max(2000000, { message: 'The maximum image size is 2MB.' }),
+    mimetype: z
+      .string()
+      .refine(
+        (type) => MIME_TYPE.includes(type),
+        'Only .jpg, .jpeg, .png, and .webp formats are supported.'
+      ),
+    buffer: z.instanceof(Buffer),
+  }),
 });
 
 /**
@@ -67,7 +52,7 @@ export const BookMultipartSchema = z.object({
  *  Book response schema (includes id, imageurl and averageRating)
  * ========================================
  */
-export const BookResponseSchema = BookSchema.extend({
+export const BookResponseSchema = BookSchema.omit({ file: true }).extend({
   id: z.string().uuid(),
   imageUrl: z.string(),
   averageRating: z.number(),
