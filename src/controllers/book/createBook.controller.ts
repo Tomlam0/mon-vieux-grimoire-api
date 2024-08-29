@@ -4,6 +4,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
+import sharp from 'sharp';
 
 import { BookMultipartSchema, BookResponseSchema } from '@/schema/book/book.schema';
 
@@ -23,7 +24,6 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
 
   // Extract the file
   const parts = req.parts();
-
   const fields: Record<string, any> = {};
   let fileInfo: any = null;
 
@@ -35,11 +35,14 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
       }
       const fileBuffer = Buffer.concat(buffers);
 
+      // Using sharp to reduce picture size and transform to webp
+      const optimizedBuffer = await sharp(fileBuffer).webp({ quality: 80 }).toBuffer();
+
       fileInfo = {
-        filename: part.filename,
-        mimetype: part.mimetype,
-        size: fileBuffer.length,
-        buffer: fileBuffer,
+        filename: part.filename.replace(/\.[^.]+$/, '.webp'),
+        mimetype: 'image/webp',
+        size: optimizedBuffer.length,
+        buffer: optimizedBuffer,
       };
     } else {
       fields[part.fieldname] = part.value;
