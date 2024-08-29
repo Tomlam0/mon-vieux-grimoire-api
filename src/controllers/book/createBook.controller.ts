@@ -107,6 +107,7 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
       Key: imageKey,
       Body: fileInfo.buffer,
       ContentType: fileInfo.mimetype,
+      ACL: 'public-read', // Makes the file public
     })
   );
 
