@@ -15,7 +15,7 @@ const auth: FastifyPluginAsync = async (app) => {
     try {
       const token = req.cookies.authToken;
 
-      if (!token) throw new Error('Aucun token fourni');
+      if (!token) throw new Error('No token provided');
 
       const decoded = app.jwt.verify<JwtPayload>(token);
 
