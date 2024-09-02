@@ -13,8 +13,9 @@ const oauth2Plugin: FastifyPluginAsync = async (app) => {
       },
       auth: oauthPlugin.GOOGLE_CONFIGURATION,
     },
+
     startRedirectPath: '/login/google',
-    callbackUri: `${process.env.ORIGIN}/api/auth/login/google/callback`,
+    callbackUri: `${process.env.ORIGIN}/login/google/callback`,
   });
 };
 

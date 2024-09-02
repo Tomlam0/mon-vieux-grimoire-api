@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 import { oauthGoogle, oauthGoogleCallback } from '@/controllers/user/oauthGoogle.controller';
+import { userRateLimitOptions } from '@/config/ratelimit.config';
 
 export const oauthgoogleRoute = async (app: FastifyInstance) => {
   /**
@@ -16,6 +17,10 @@ export const oauthgoogleRoute = async (app: FastifyInstance) => {
     },
 
     handler: oauthGoogle,
+    
+    config: {
+      rateLimit: userRateLimitOptions.login,
+    },
   });
 };
 

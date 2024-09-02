@@ -12,7 +12,6 @@ import { LoginRequest } from '@/schema/user/index';
 export const login = async (req: FastifyRequest, res: FastifyReply) => {
   const { email, password } = req.body as LoginRequest;
 
-  // Find user with unique email and select only useful columns to reduce compute time
   const user = await req.server.prisma.user.findUnique({
     where: { email },
     select: {
@@ -22,8 +21,14 @@ export const login = async (req: FastifyRequest, res: FastifyReply) => {
     },
   });
 
-  // Compare password only if user exists in db
-  const valid = user && (await bcrypt.compare(password, user.password));
+  // Handle cases where the user does not exist or does not have a password (OAuth user)
+  if (!user || !user.password) {
+    return res.status(401).send({
+      message: 'Invalid email or password. Please try again.',
+    });
+  }
+
+  const valid = await bcrypt.compare(password, user.password);
 
   if (!valid) {
     return res.status(401).send({
