@@ -1,16 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 
-/**
- * ========================================
- *  Connect to a user account using Google Oauth
- * ========================================
- */
-export const oauthGoogle = async (req: FastifyRequest, res: FastifyReply) => {
-  const authorizationUri = req.server.googleOAuth2.generateAuthorizationUri(req);
-
-  res.redirect(authorizationUri);
-};
-
 export const oauthGoogleCallback = async (req: FastifyRequest, res: FastifyReply) => {
   const { auth } = await req.server.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
   const userInfo = await req.server.googleOAuth2.userinfo(auth);

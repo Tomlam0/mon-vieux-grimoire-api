@@ -13,7 +13,13 @@ const auth: FastifyPluginAsync = async (app) => {
 
   app.decorate('auth', async (req: FastifyRequest, res: FastifyReply) => {
     try {
-      const token = req.cookies.authToken;
+      // First verify directly with cookie
+      let token = req.cookies.authToken;
+
+      // If there's no cookie, verify with headers
+      if (!token) {
+        token = req.headers.authtoken as string;
+      }
 
       if (!token) throw new Error('No token provided');
 

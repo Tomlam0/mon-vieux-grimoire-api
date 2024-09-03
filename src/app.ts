@@ -70,10 +70,10 @@ const main = async (): Promise<FastifyInstance> => {
   await app.register(prismaPlugin);
   await app.register(auth);
   await app.register(nodemailerPlugin);
-  await app.register(oauth2Plugin);
   await app.register(initSwagger);
   await app.register(s3Plugin);
   await app.register(errorHandler);
+  await app.register(oauth2Plugin);
 
   /**
    * ========================================
