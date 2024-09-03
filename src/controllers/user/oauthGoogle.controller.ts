@@ -1,14 +1,14 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 
 export const oauthGoogleCallback = async (req: FastifyRequest, res: FastifyReply) => {
-  const { auth } = await req.server.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
-  const userInfo = await req.server.googleOAuth2.userinfo(auth);
+  const { token } = await req.server.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
+  const userInfo = await req.server.googleOAuth2.userinfo(token);
 
   let user = await req.server.prisma.user.findUnique({
     where: { email: userInfo.email },
   });
 
-  // If user exist and have a password it's a standard account.
+  // If user exists and has a password it's a standard account.
   if (user && user.password) {
     return res.status(400).send({
       message:
@@ -32,12 +32,12 @@ export const oauthGoogleCallback = async (req: FastifyRequest, res: FastifyReply
   }
 
   // Generate JWT with userId in payload
-  const token = req.server.jwt.sign({ userId: user.id }, { expiresIn: '4h' });
+  const authToken = req.server.jwt.sign({ userId: user.id }, { expiresIn: '4h' });
 
-  res.setCookie('authToken', token, {
-    httpOnly: true, // Set httpOnly to avoid XSS attack, cookie only accessible by fetch
-    sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none', // Protect against CSRF
-    secure: process.env.NODE_ENV === 'production', // Ensure secure flag is set in production
+  res.setCookie('authToken', authToken, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: false,
     maxAge: 4 * 60 * 60, // 4 hours
     path: '/',
   });

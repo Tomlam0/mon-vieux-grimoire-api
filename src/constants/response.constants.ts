@@ -23,6 +23,9 @@ export const SUCCESS200 = (message?: string) => generateResponseSchema(200, 'OK'
 
 export const SUCCESS201 = (message?: string) => generateResponseSchema(201, 'Created')(message);
 
+// REDIRECTION
+export const SUCCESS302 = (message?: string) => generateResponseSchema(302, 'Found')(message);
+
 // ERRORS
 export const ERROR400 = (message?: string) => generateResponseSchema(400, 'Bad Request')(message);
 
