@@ -28,12 +28,13 @@ Before setting up the project, ensure you have the following:
 
 ```bash
 ├── api/                         # Contains file for serverless functions for connecting to Vercel.
+├── doc/                         # Documentation files, including API specs, request collections, and guides.
 ├── prisma/                      # Contains Prisma files, such as schemas and seed scripts.
 ├── src/
 │   ├── config/                  # Configuration, such as CORS and environment variables.
 │   ├── constants/               # Contains common constants used across the application.
 │   ├── controllers/             # Contains controllers to handle requests and business logic.
-│   ├── lib/                     # Contains modules used in the application like Prisma client.
+│   ├── lib/                     # Contains modules used in the application.
 │   ├── plugins/                 # Plugins to extend Fastify's functionality.
 │   ├── routes/                  # Defines the application's routes.
 │   ├── schema/                  # Contains Zod schemas for request validation and typing.
@@ -179,6 +180,14 @@ pnpm prisma:studio:dev
 ```
 
 For more granular control and advanced features, it is recommended to use a specific DB UI.
+
+## How to Use the HTTP Request Collection
+
+1. **Import the collection**:
+   - Open your preferred HTTP client (e.g., Thunder Client, Postman).
+   - Import the provided `json` file located in the `doc/` folder.
+2. **Configure environment variables**:
+   - Ensure you set up environment variables in your HTTP client to run the requests successfully.
 
 ## Setting Up AWS S3 for Storing Book Images
 
