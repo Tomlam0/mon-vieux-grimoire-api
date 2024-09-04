@@ -6,7 +6,7 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp';
 
-import { BookSchema, BookResponseSchema } from '@/schema/book/book.schema';
+import { BookSchema, CreateBookResponseSchema } from '@/schema/book/book.schema';
 
 /**
  * ========================================
@@ -134,5 +134,5 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
     },
   });
 
-  return res.status(201).send(BookResponseSchema.parse(newBook));
+  return res.status(201).send(CreateBookResponseSchema.parse(newBook));
 };

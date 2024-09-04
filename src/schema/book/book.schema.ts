@@ -49,13 +49,37 @@ export const BookSchema = z.object({
 
 /**
  * ========================================
- *  Book response schema (includes id, imageurl and averageRating)
+ *       Create Book response schema
  * ========================================
  */
-export const BookResponseSchema = BookSchema.omit({ file: true }).extend({
-  id: z.string().uuid(),
-  imageUrl: z.string(),
+export const CreateBookResponseSchema = BookSchema.omit({ file: true }).extend({
   averageRating: z.number(),
+  imageUrl: z.string(),
+  id: z.string().uuid(),
+});
+
+/**
+ * ========================================
+ *       Get Book response schema (also exclude grades)
+ * ========================================
+ */
+export const GetBookResponseSchema = BookSchema.omit({ ratings: true, file: true }).extend({
+  averageRating: z.number(),
+  imageUrl: z.string(),
+  id: z.string().uuid(),
+  userId: z.string(),
+});
+
+/**
+ * ========================================
+ *   Get All Books Paginated response schema
+ * ========================================
+ */
+export const GetAllBooksSchema = z.object({
+  totalBooks: z.number(),
+  totalPages: z.number(),
+  currentPage: z.number(),
+  books: z.array(GetBookResponseSchema),
 });
 
 /**
@@ -63,7 +87,7 @@ export const BookResponseSchema = BookSchema.omit({ file: true }).extend({
  *  Schema for an array of books (used for retrieving all books)
  * ========================================
  */
-export const BookArraySchema = z.array(BookResponseSchema);
+export const BookArraySchema = z.array(GetBookResponseSchema);
 
 /**
  * ========================================

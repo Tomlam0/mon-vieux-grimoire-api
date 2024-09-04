@@ -1,7 +1,8 @@
 import { FastifyInstance } from 'fastify';
 
 import { getAllBooks } from '@/controllers/book/index';
-import { BookArraySchema } from '@/schema/book/book.schema';
+import { GetAllBooksSchema } from '@/schema/book/book.schema';
+import { ERROR404 } from '@/constants/response.constants';
 
 export async function getAllBooksRoute(app: FastifyInstance) {
   /**
@@ -13,18 +14,18 @@ export async function getAllBooksRoute(app: FastifyInstance) {
     // Openapi doc
     schema: {
       tags: ['Book'],
-      summary:
-        'Display all books available on the website, accessible to unauthenticated users as well',
+      summary: 'Display all books with a maximum of 9 books per page in a paginated format.',
 
       response: {
         200: {
           description: 'OK',
           content: {
             'application/json': {
-              schema: BookArraySchema,
+              schema: GetAllBooksSchema,
             },
           },
         },
+        404: ERROR404('No books found.'),
       },
     },
 

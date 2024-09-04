@@ -1,7 +1,8 @@
 import { FastifyInstance } from 'fastify';
 
 import { getOneBook } from '@/controllers/book/index';
-import { BookResponseSchema } from '@/schema/book/book.schema';
+import { GetBookResponseSchema } from '@/schema/book/book.schema';
+import { ERROR404 } from '@/constants/response.constants';
 
 export async function getOneBookRoute(app: FastifyInstance) {
   /**
@@ -20,10 +21,11 @@ export async function getOneBookRoute(app: FastifyInstance) {
           description: 'OK',
           content: {
             'application/json': {
-              schema: BookResponseSchema.omit({ id: true }),
+              schema: GetBookResponseSchema,
             },
           },
         },
+        404: ERROR404('Book not found.'),
       },
     },
 
