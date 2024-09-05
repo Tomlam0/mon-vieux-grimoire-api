@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 import { deleteBook } from '@/controllers/book/index';
-import { BookSchema } from '@/schema/book/book.schema';
+import { SUCCESS200, ERROR404, ERROR403 } from '@/constants/response.constants';
 
 export async function deleteBookRoute(app: FastifyInstance) {
   /**
@@ -19,7 +19,11 @@ export async function deleteBookRoute(app: FastifyInstance) {
 
       security: [{ authToken: [] }],
 
-      body: BookSchema,
+      response: {
+        200: SUCCESS200('Book successfully deleted'),
+        404: ERROR404('Book not found'),
+        403: ERROR403('You are not authorized to delete this book'),
+      },
     },
 
     handler: deleteBook,

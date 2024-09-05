@@ -14,7 +14,7 @@ export const getOneBook = async (
   req: FastifyRequest<{ Params: { id: string } }>,
   res: FastifyReply
 ) => {
-  // Verify if Id is well structured before sending useless requests to db.
+  // Verify if book Id is well structured before sending useless requests to db.
   const IdSchema = z.string().uuid();
   const validatedId = IdSchema.parse(req.params.id);
 

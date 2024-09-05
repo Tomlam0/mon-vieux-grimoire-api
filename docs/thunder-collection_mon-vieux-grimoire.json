@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "mon-vieux-grimoire",
     "collectionId": "87233272-be9b-4d57-b755-44d9ef984ead",
-    "dateExported": "2024-09-04T10:04:43.257Z",
+    "dateExported": "2024-09-05T09:50:01.417Z",
     "version": "1.2",
     "folders": [
         {
@@ -30,7 +30,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-08-09T12:04:24.881Z",
-            "modified": "2024-09-04T08:05:20.878Z",
+            "modified": "2024-09-05T08:52:08.752Z",
             "headers": [],
             "body": {
                 "type": "json",
@@ -42,12 +42,12 @@
             "_id": "d5fefc05-a0ec-423d-a15c-790af352a11e",
             "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
             "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
-            "name": "Add Book (standard account)",
+            "name": "Create Book (standard account)",
             "url": "http://localhost:4000/api/books/",
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-09-04T09:10:23.041Z",
-            "modified": "2024-09-04T09:59:47.024Z",
+            "modified": "2024-09-05T09:48:39.955Z",
             "headers": [],
             "body": {
                 "type": "formdata",
@@ -93,12 +93,12 @@
             "_id": "d78e6ee1-08a5-421a-a7d3-5f7ce61fe4c2",
             "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
             "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
-            "name": "Add Book (oauth account) ",
+            "name": "Create Book (oauth account) ",
             "url": "http://localhost:4000/api/books/",
             "method": "POST",
             "sortNum": 20000,
             "created": "2024-09-04T09:10:24.698Z",
-            "modified": "2024-09-04T09:58:00.657Z",
+            "modified": "2024-09-05T09:49:49.378Z",
             "headers": [
                 {
                     "name": "authToken",
@@ -168,10 +168,60 @@
                     "isPath": false
                 }
             ]
+        },
+        {
+            "_id": "994910f4-077d-42e8-a788-2dde656dd74d",
+            "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
+            "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
+            "name": "Get All Books",
+            "url": "http://localhost:4000/api/books",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-09-04T10:43:33.195Z",
+            "modified": "2024-09-04T10:43:47.357Z",
+            "headers": []
+        },
+        {
+            "_id": "9c14feea-1eff-42a5-8d51-05da49bbf39a",
+            "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
+            "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
+            "name": "Get One Book",
+            "url": "http://localhost:4000/api/books/{id}",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-09-04T12:10:32.981Z",
+            "modified": "2024-09-05T09:09:12.793Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "228aeec2-2171-462b-9435-efa9283bb462",
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "68822fbe-bfd6-4262-b3ef-e1f4ed79dcb0",
+            "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
+            "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
+            "name": "Delete Book",
+            "url": "http://localhost:4000/api/books/{id}",
+            "method": "DELETE",
+            "sortNum": 90000,
+            "created": "2024-09-05T08:28:59.973Z",
+            "modified": "2024-09-05T09:47:15.812Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "",
+                    "isPath": true
+                }
+            ]
         }
     ],
     "settings": {
         "envId": "a67fc97d-4045-4149-9c4b-6f77c89fde05"
     },
-    "ref": "DccTy_aZGgtKOQOd4pd9a3vDrP-R6vAafKJWdgUr1izQpzQ_1xDx-AF3mM4Xo_7YbJJQi2VNQw8Q9jobWgp_qQ"
+    "ref": "DccTy_aZGgtKOQOd4pd9a3KJ49Vf0m2LcCD6pVDV_bJqGxIIBBOBbPoAdXOneS8yIA5GkRi2K_4F9NfgdOX3LA"
 }

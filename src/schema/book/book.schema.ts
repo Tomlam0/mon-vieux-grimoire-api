@@ -53,14 +53,14 @@ export const BookSchema = z.object({
  * ========================================
  */
 export const CreateBookResponseSchema = BookSchema.omit({ file: true }).extend({
-  averageRating: z.number(),
   imageUrl: z.string(),
   id: z.string().uuid(),
+  userId: z.string(),
 });
 
 /**
  * ========================================
- *       Get Book response schema (also exclude grades)
+ *       Get Book response schema (exclude grades and add averageRating)
  * ========================================
  */
 export const GetBookResponseSchema = BookSchema.omit({ ratings: true, file: true }).extend({
