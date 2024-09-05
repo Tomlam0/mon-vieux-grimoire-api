@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 
 import { getBestBooks } from '@/controllers/book/index';
 import { BookArraySchema } from '@/schema/book/book.schema';
+import { ERROR400 } from '@/constants/response.constants';
 
 export async function getBestBooksRoute(app: FastifyInstance) {
   /**
@@ -17,6 +18,7 @@ export async function getBestBooksRoute(app: FastifyInstance) {
 
       response: {
         200: BookArraySchema,
+        400: ERROR400('No books found.'),
       },
     },
 
