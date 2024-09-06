@@ -93,8 +93,15 @@ export const createBook = async (req: FastifyRequest, res: FastifyReply) => {
     });
   }
 
+  // Normalize file title to avoid spaces in imageKey for url
+  const normalizedTitleFile = validatedData.title
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+
   // Generate a unique key for the image in S3
-  const imageKey = `${uuidv4()}-${validatedData.file.filename}`;
+  const imageKey = `${uuidv4()}-${normalizedTitleFile}.webp`;
 
   // Upload the image to S3
   await req.server.s3.send(

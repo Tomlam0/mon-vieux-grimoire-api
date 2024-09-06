@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "mon-vieux-grimoire",
     "collectionId": "87233272-be9b-4d57-b755-44d9ef984ead",
-    "dateExported": "2024-09-05T09:50:01.417Z",
+    "dateExported": "2024-09-06T14:25:19.861Z",
     "version": "1.2",
     "folders": [
         {
@@ -22,6 +22,49 @@
     ],
     "requests": [
         {
+            "_id": "994910f4-077d-42e8-a788-2dde656dd74d",
+            "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
+            "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
+            "name": "Get All Books",
+            "url": "http://localhost:4000/api/books",
+            "method": "GET",
+            "sortNum": 5000,
+            "created": "2024-09-04T10:43:33.195Z",
+            "modified": "2024-09-04T10:43:47.357Z",
+            "headers": []
+        },
+        {
+            "_id": "9c14feea-1eff-42a5-8d51-05da49bbf39a",
+            "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
+            "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
+            "name": "Get One Book",
+            "url": "http://localhost:4000/api/books/{id}",
+            "method": "GET",
+            "sortNum": 7500,
+            "created": "2024-09-04T12:10:32.981Z",
+            "modified": "2024-09-05T09:09:12.793Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "228aeec2-2171-462b-9435-efa9283bb462",
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "8a4d975d-f20e-465a-bd18-dbd9c33405ce",
+            "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
+            "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
+            "name": "Get Best Books",
+            "url": "http://localhost:4000/api/books/bestrating",
+            "method": "GET",
+            "sortNum": 8750,
+            "created": "2024-09-05T09:53:51.553Z",
+            "modified": "2024-09-05T09:54:24.024Z",
+            "headers": []
+        },
+        {
             "_id": "56916600-fa8d-4864-b612-58323ab8f3b4",
             "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
             "containerId": "57500503-ac5f-4798-ba20-b6fdf262a92f",
@@ -30,7 +73,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-08-09T12:04:24.881Z",
-            "modified": "2024-09-05T08:52:08.752Z",
+            "modified": "2024-09-06T14:24:08.139Z",
             "headers": [],
             "body": {
                 "type": "json",
@@ -47,7 +90,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-09-04T09:10:23.041Z",
-            "modified": "2024-09-05T09:48:39.955Z",
+            "modified": "2024-09-06T14:24:58.060Z",
             "headers": [],
             "body": {
                 "type": "formdata",
@@ -170,35 +213,50 @@
             ]
         },
         {
-            "_id": "994910f4-077d-42e8-a788-2dde656dd74d",
+            "_id": "2698e945-d2fc-42f9-bec4-9cca6d3a3ffc",
             "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
             "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
-            "name": "Get All Books",
-            "url": "http://localhost:4000/api/books",
-            "method": "GET",
-            "sortNum": 70000,
-            "created": "2024-09-04T10:43:33.195Z",
-            "modified": "2024-09-04T10:43:47.357Z",
-            "headers": []
-        },
-        {
-            "_id": "9c14feea-1eff-42a5-8d51-05da49bbf39a",
-            "colId": "87233272-be9b-4d57-b755-44d9ef984ead",
-            "containerId": "f1ab750e-8158-4cc9-922e-0e3fa4400197",
-            "name": "Get One Book",
+            "name": "Update Book",
             "url": "http://localhost:4000/api/books/{id}",
-            "method": "GET",
-            "sortNum": 80000,
-            "created": "2024-09-04T12:10:32.981Z",
-            "modified": "2024-09-05T09:09:12.793Z",
+            "method": "PUT",
+            "sortNum": 55000,
+            "created": "2024-09-05T13:32:03.104Z",
+            "modified": "2024-09-06T14:24:03.022Z",
             "headers": [],
             "params": [
                 {
                     "name": "id",
-                    "value": "228aeec2-2171-462b-9435-efa9283bb462",
+                    "value": "",
                     "isPath": true
                 }
-            ]
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "title",
+                        "value": ""
+                    },
+                    {
+                        "name": "author",
+                        "value": ""
+                    },
+                    {
+                        "name": "genre",
+                        "value": ""
+                    },
+                    {
+                        "name": "year",
+                        "value": ""
+                    },
+                    {
+                        "name": "ratings[0][grade]",
+                        "value": ""
+                    }
+                ],
+                "files": []
+            }
         },
         {
             "_id": "68822fbe-bfd6-4262-b3ef-e1f4ed79dcb0",
@@ -223,5 +281,5 @@
     "settings": {
         "envId": "a67fc97d-4045-4149-9c4b-6f77c89fde05"
     },
-    "ref": "DccTy_aZGgtKOQOd4pd9a3KJ49Vf0m2LcCD6pVDV_bJqGxIIBBOBbPoAdXOneS8yIA5GkRi2K_4F9NfgdOX3LA"
+    "ref": "DccTy_aZGgtKOQOd4pd9axySxAKwL2twMO-CVAXm_NTcGi1SCy4-XmLXLXyf4OlA2Xy3O2IBOf0bfrdIlbSLdw"
 }

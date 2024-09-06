@@ -7,7 +7,7 @@ const MIME_TYPE = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 /**
  * ========================================
- *        Book input schema
+ *        Create Book input schema
  * ========================================
  */
 export const BookSchema = z.object({

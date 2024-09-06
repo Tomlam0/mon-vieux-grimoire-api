@@ -31,6 +31,7 @@ export const deleteBook = async (
 
   if (book.userId !== userId) {
     res.status(403).send({ message: 'You are not authorized to delete this book' });
+    return;
   }
 
   // Delete the image from S3
