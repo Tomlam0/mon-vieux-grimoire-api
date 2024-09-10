@@ -17,22 +17,22 @@ const initSwagger: FastifyPluginAsync = async (app) => {
      *   Auth config for swagger ui access security
      * ========================================
      */
-    // app.register(fastifyBasicAuth, {
-    //   validate: async (
-    //     username: string,
-    //     password: string,
-    //     req: FastifyRequest,
-    //     res: FastifyReply
-    //   ) => {
-    //     if (
-    //       username !== process.env.SWAGGER_UI_USERNAME ||
-    //       password !== process.env.SWAGGER_UI_PASSWORD
-    //     ) {
-    //       res.code(401).send({ message: 'Unauthorized' });
-    //     }
-    //   },
-    //   authenticate: true,
-    // });
+    app.register(fastifyBasicAuth, {
+      validate: async (
+        username: string,
+        password: string,
+        req: FastifyRequest,
+        res: FastifyReply
+      ) => {
+        if (
+          username !== process.env.SWAGGER_UI_USERNAME ||
+          password !== process.env.SWAGGER_UI_PASSWORD
+        ) {
+          res.code(401).send({ message: 'Unauthorized' });
+        }
+      },
+      authenticate: true,
+    });
 
     /**
      * ========================================

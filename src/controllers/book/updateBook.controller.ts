@@ -178,7 +178,7 @@ export const updateBook = async (
         },
       },
     },
-    
+
     include: {
       ratings: {
         where: {
@@ -191,24 +191,26 @@ export const updateBook = async (
     },
   });
 
-  // Recalculate the average rating
-  const allRatings = await req.server.prisma.rating.findMany({
-    where: { bookId: validatedId },
-    select: { grade: true },
-  });
+  // Recalculate the average rating only if ratings is updated
+  if (userInputData.ratings) {
+    const allRatings = await req.server.prisma.rating.findMany({
+      where: { bookId: validatedId },
+      select: { grade: true },
+    });
 
-  const newAverageRating =
-    Math.round(
-      (allRatings.reduce((sum, rating) => sum + rating.grade, 0) / allRatings.length) * 10
-    ) / 10;
+    const newAverageRating =
+      Math.round(
+        (allRatings.reduce((sum, rating) => sum + rating.grade, 0) / allRatings.length) * 10
+      ) / 10;
 
-  // Update the book with the new average rating
-  await req.server.prisma.book.update({
-    where: { id: validatedId },
-    data: {
-      averageRating: newAverageRating,
-    },
-  });
+    // Update the book with the new average rating
+    await req.server.prisma.book.update({
+      where: { id: validatedId },
+      data: {
+        averageRating: newAverageRating,
+      },
+    });
+  }
 
   return res.status(200).send(UpdateResponseBookSchema.parse(updatedBook));
 };
