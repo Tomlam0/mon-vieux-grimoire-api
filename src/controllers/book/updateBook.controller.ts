@@ -30,6 +30,9 @@ export const updateBook = async (
     where: {
       id: validatedId,
     },
+    include: {
+      ratings: true,
+    },
   });
 
   if (!book) {
@@ -46,7 +49,7 @@ export const updateBook = async (
   let fields: Record<string, any> = {};
   let fileInfo: any = null;
 
-  // Check if the request is multipart
+  // Check if the request is multipart with a file, if it's not, send a JSON request
   if (req.isMultipart()) {
     const parts = req.parts();
 
@@ -94,14 +97,14 @@ export const updateBook = async (
     author: fields.author ? normalizeField(fields.author) : undefined,
     genre: fields.genre ? normalizeField(fields.genre) : undefined,
     year: fields.year ? parseInt(fields.year, 10) : undefined,
-    ratings: fields.ratings
-      ? fields.ratings.map((r: any) => ({ grade: parseInt(r.grade, 10) }))
+    // The first rating in the array always belongs to the creator of the book
+    ratings: fields['ratings[0][grade]']
+      ? [{ grade: parseInt(fields['ratings[0][grade]'], 10) }]
       : undefined,
     // Only include file if it's available
     file: fileInfo || undefined,
   };
 
-  // Validate with Zod using UpdateBookSchema
   const validatedData = UpdateBookSchema.parse(userInputData);
 
   // If a new file is uploaded, delete the old file from S3
@@ -121,15 +124,14 @@ export const updateBook = async (
     }
 
     // Use the provided title, or fallback to the existing one from the database
-    const titleForImage = fields.title ? normalizeField(fields.title) : book.title;
     // Normalize title for file name (replace spaces, special characters, etc.)
+    const titleForImage = fields.title ? normalizeField(fields.title) : book.title;
     const normalizedTitleFile = titleForImage
       .trim()
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, '');
 
-    // Upload the new image
     const newImageKey = `${uuidv4()}-${normalizedTitleFile}.webp`;
 
     await req.server.s3.send(
@@ -144,6 +146,7 @@ export const updateBook = async (
     imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${newImageKey}`;
   }
 
+  // Ratings are updated separately using Prisma's relation operations
   const updateData: any = {
     title: validatedData.title,
     author: validatedData.author,
@@ -152,19 +155,43 @@ export const updateBook = async (
     imageUrl,
   };
 
-  // Remove undefined fields (those not being updated)
+  // Remove unusued fields
   Object.keys(updateData).forEach((key) => {
     if (updateData[key] === undefined) {
       delete updateData[key];
     }
   });
 
-  // Update the book in the database
   const updatedBook = await req.server.prisma.book.update({
     where: { id: validatedId },
-    data: updateData,
+    data: {
+      ...updateData,
+
+      ratings: {
+        update: {
+          where: {
+            id: book.ratings[0].id,
+          },
+          data: {
+            grade: validatedData.ratings ? validatedData.ratings[0].grade : book.ratings[0].grade,
+          },
+        },
+      },
+    },
     include: {
       ratings: true,
+    },
+  });
+
+  // Recalculate the average rating
+  const allRatings = updatedBook.ratings.map((rating) => rating.grade);
+  const newAverageRating = allRatings.reduce((sum, grade) => sum + grade, 0) / allRatings.length;
+
+  // Update the book with the new average rating
+  await req.server.prisma.book.update({
+    where: { id: validatedId },
+    data: {
+      averageRating: newAverageRating,
     },
   });
 
