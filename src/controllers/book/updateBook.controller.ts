@@ -40,9 +40,9 @@ export const updateBook = async (
   }
 
   // Check if the authenticated user is the owner of the book
-  const userId = req.user as string;
+  const actualUserId = req.user as string;
 
-  if (book.userId !== userId) {
+  if (book.userId !== actualUserId) {
     return res.status(403).send({ message: 'You are not authorized to update this book' });
   }
 
@@ -170,7 +170,7 @@ export const updateBook = async (
       ratings: {
         update: {
           where: {
-            id: book.ratings[0].id,
+            id: book.ratings.find((rating) => rating.userId === actualUserId)?.id,
           },
           data: {
             grade: validatedData.ratings ? validatedData.ratings[0].grade : book.ratings[0].grade,
@@ -178,14 +178,29 @@ export const updateBook = async (
         },
       },
     },
+    
     include: {
-      ratings: true,
+      ratings: {
+        where: {
+          userId: actualUserId,
+        },
+        select: {
+          grade: true,
+        },
+      },
     },
   });
 
   // Recalculate the average rating
-  const allRatings = updatedBook.ratings.map((rating) => rating.grade);
-  const newAverageRating = allRatings.reduce((sum, grade) => sum + grade, 0) / allRatings.length;
+  const allRatings = await req.server.prisma.rating.findMany({
+    where: { bookId: validatedId },
+    select: { grade: true },
+  });
+
+  const newAverageRating =
+    Math.round(
+      (allRatings.reduce((sum, rating) => sum + rating.grade, 0) / allRatings.length) * 10
+    ) / 10;
 
   // Update the book with the new average rating
   await req.server.prisma.book.update({
