@@ -27,7 +27,6 @@ Before setting up the project, ensure you have the following:
 ## Project Structure
 
 ```bash
-├── api/                         # Contains file for serverless functions for connecting to Vercel.
 ├── doc/                         # Documentation files, including API specs, request collections, and guides.
 ├── prisma/                      # Contains Prisma files, such as schemas and seed scripts.
 ├── src/

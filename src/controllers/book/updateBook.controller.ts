@@ -170,7 +170,7 @@ export const updateBook = async (
       ratings: {
         update: {
           where: {
-            id: book.ratings.find((rating) => rating.userId === actualUserId)?.id,
+            id: book.ratings.find((rating: any) => rating.userId === actualUserId)?.id,
           },
           data: {
             grade: validatedData.ratings ? validatedData.ratings[0].grade : book.ratings[0].grade,
@@ -200,7 +200,9 @@ export const updateBook = async (
 
     const newAverageRating =
       Math.round(
-        (allRatings.reduce((sum, rating) => sum + rating.grade, 0) / allRatings.length) * 10
+        (allRatings.reduce((sum: number, rating: { grade: number }) => sum + rating.grade, 0) /
+          allRatings.length) *
+          10
       ) / 10;
 
     // Update the book with the new average rating

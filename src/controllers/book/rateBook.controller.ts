@@ -62,7 +62,7 @@ export const rateBook = async (
 
   const newAverageRating =
     Math.round(
-      (allRatings.reduce((sum, rating) => sum + rating.grade, 0) / allRatings.length) * 10
+      (allRatings.reduce((sum: number, rating: { grade: number }) => sum + rating.grade, 0) / allRatings.length) * 10
     ) / 10;
 
   await req.server.prisma.book.update({
