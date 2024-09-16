@@ -28,3 +28,17 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# Terraform
+/.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
