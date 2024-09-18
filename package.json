@@ -4,8 +4,8 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon",
-    "start": "cross-env NODE_ENV=production node dist/server.js",
     "build": "tsc -p tsconfig.json",
+    "start": "cross-env NODE_ENV=production node -r ./tsconfig-paths-bootstrap.js dist/src/server.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts",

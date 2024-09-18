@@ -45,6 +45,8 @@ resource "render_web_service" "mon-vieux-grimoire-api" {
     AWS_BUCKET_NAME = { value = var.AWS_BUCKET_NAME }
     AWS_ACCESS_KEY_ID = { value = var.AWS_ACCESS_KEY_ID }
     AWS_SECRET_ACCESS_KEY = { value = var.AWS_SECRET_ACCESS_KEY }
+
+    ENABLE_SWAGGER = { value = "false" }
   }
 }
 
