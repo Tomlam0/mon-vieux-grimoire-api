@@ -60,7 +60,7 @@
     "zod-openapi": "^2.19.0",
     "zod-prisma-types": "^3.1.8",
     "zod-to-json-schema": "^3.23.1",
-    "zod-validation-error": "^3.3.0"
+    "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

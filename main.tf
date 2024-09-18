@@ -33,7 +33,7 @@ resource "render_web_service" "mon-vieux-grimoire-api" {
     DATABASE_URL = { value = var.DATABASE_URL }
 
     ORIGIN = { value = "https://mon-vieux-grimoire-livres.vercel.app" }
-    CREDENTIALS = { value = "true" }
+    CREDENTIALS = { value = true }
 
     JWT_SECRET_KEY = { value = var.JWT_SECRET_KEY }
     COOKIE_SECRET = { value = var.COOKIE_SECRET }
@@ -46,7 +46,7 @@ resource "render_web_service" "mon-vieux-grimoire-api" {
     AWS_ACCESS_KEY_ID = { value = var.AWS_ACCESS_KEY_ID }
     AWS_SECRET_ACCESS_KEY = { value = var.AWS_SECRET_ACCESS_KEY }
 
-    ENABLE_SWAGGER = { value = "false" }
+    ENABLE_SWAGGER = { value = false }
   }
 }
 
