@@ -107,9 +107,9 @@ This project uses import aliases for easier module resolution.
 The aliases are defined in the tsconfig.json file as follows:
 
 ```bash
- "baseUrl": "./src",
+ "baseUrl": ".",
  "paths":
-   "@/*": ["*"],
+   "@/*": ["src/*"],
 ```
 
 These aliases allow you to import modules using the @ prefix instead of relative paths.

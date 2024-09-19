@@ -4,6 +4,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 
 const envSchema = z.object({
   PORT: z.number().default(4000),
+  HOST: z.string().default('0.0.0.0'),
 
   DATABASE_URL: z.string(),
 

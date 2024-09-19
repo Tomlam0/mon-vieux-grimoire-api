@@ -5,8 +5,9 @@ const start = async () => {
 
   try {
     const port = app.config.PORT || 4000;
+    const host = process.env.HOST || '0.0.0.0';
 
-    await app.listen({ port });
+    await app.listen({ port, host });
   } catch (err) {
     app.log.error(err);
 

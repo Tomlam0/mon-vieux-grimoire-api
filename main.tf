@@ -14,7 +14,8 @@ provider "render" {
 
 resource "render_web_service" "mon-vieux-grimoire-api" {
   name               = "mon-vieux-grimoire-api"
-  plan               = "starter"
+  // Since its the only option you need to switch to 'free' in Render directly after hosting
+  plan               = "starter" 
   region             = "frankfurt"
 
 # Using Docker
@@ -29,6 +30,8 @@ resource "render_web_service" "mon-vieux-grimoire-api" {
 
   env_vars = {
     NODE_ENV = { value = "production" }
+
+    HOST = { value = var.HOST }
 
     DATABASE_URL = { value = var.DATABASE_URL }
 
@@ -58,6 +61,10 @@ variable "RENDER_OWNER_ID" {
 }
 
 variable "DATABASE_URL" {
+  type = string
+}
+
+variable "HOST" {
   type = string
 }
 
