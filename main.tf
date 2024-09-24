@@ -24,6 +24,7 @@ resource "render_web_service" "mon-vieux-grimoire-api" {
       repo_url        = "https://github.com/Tomlam0/mon-vieux-grimoire-api"
       branch          = "main"
       dockerfile_path = "./Dockerfile"
+      
       auto_deploy = true
     }
   }
