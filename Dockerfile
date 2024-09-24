@@ -20,11 +20,8 @@ RUN pnpm i --prod --frozen-lockfile
 # Copy the compiled files from the build step
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/tsconfig-paths-bootstrap.js ./tsconfig-paths-bootstrap.js
 
-# Execute migrations
-RUN pnpm prisma:migrate:prod
-
 EXPOSE 4000
-# Use tsconfig-paths-bootstrap.js to resolve paths at runtime
-CMD ["node", "-r", "./tsconfig-paths-bootstrap.js", "dist/src/server.js"]
+CMD ["pnpm", "run", "start:prod"]
