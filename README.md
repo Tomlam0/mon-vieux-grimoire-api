@@ -239,6 +239,11 @@ To obtain the `RENDER_API_KEY`, follow these steps:
    - `HOST`
    - `JWT_SECRET_KEY`
    - `COOKIE_SECRET`
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_FROM`
+   - `SMTP_USER`
+   - `SMTP_PASS`
    - `GOOGLE_CLIENT_ID`
    - `GOOGLE_CLIENT_SECRET`
    - `AWS_BUCKET_NAME`
@@ -285,6 +290,11 @@ jobs:
           HOST = "${{ secrets.HOST }}"
           JWT_SECRET_KEY = "${{ secrets.JWT_SECRET_KEY }}"
           COOKIE_SECRET = "${{ secrets.COOKIE_SECRET }}"
+          SMTP_HOST = "${{ secrets.SMTP_HOST }}"
+          SMTP_PORT = "${{ secrets.SMTP_PORT }}"
+          SMTP_FROM = "${{ secrets.SMTP_FROM }}"
+          SMTP_USER = "${{ secrets.SMTP_USER }}"
+          SMTP_PASS = "${{ secrets.SMTP_PASS }}"
           GOOGLE_CLIENT_ID = "${{ secrets.GOOGLE_CLIENT_ID }}"
           GOOGLE_CLIENT_SECRET = "${{ secrets.GOOGLE_CLIENT_SECRET }}"
           AWS_BUCKET_NAME = "${{ secrets.AWS_BUCKET_NAME }}"

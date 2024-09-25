@@ -7,7 +7,7 @@ async function createTransporter() {
     return nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || '587', 10),
-      secure: process.env.SMTP_SECURE === 'true',
+      secure: process.env.SMTP_SECURE === 'false',
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
@@ -20,7 +20,7 @@ async function createTransporter() {
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || '587', 10),
     auth: {
-      user: process.env.SMTP_USER,
+      user: process.env.SMTP_FROM,
       pass: process.env.SMTP_PASS,
     },
   });

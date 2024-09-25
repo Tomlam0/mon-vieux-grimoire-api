@@ -30,7 +30,7 @@ export const signup = async (req: FastifyRequest, res: FastifyReply) => {
   );
 
   const confirmationUrl = `${process.env.ORIGIN}/api/auth/confirm?token=${confirmationToken}`;
-  const fromSender = `Mon Vieux Grimoire <${process.env.SMTP_USER}>`;
+  const fromSender = `Mon Vieux Grimoire <${process.env.SMTP_FROM}>`;
 
   // User need to confirm account with mail
   const mailOptions = {
