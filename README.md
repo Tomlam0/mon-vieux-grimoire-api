@@ -25,10 +25,13 @@ Before setting up the project, ensure you have the following:
 - PostgreSQL
 - Prisma CLI
 - An AWS account with access to S3 (for storing book images)
+- Docker CLI
+- Terraform CLI (for infrastructure as code, managing cloud deployments)
 
 ## Project Structure
 
 ```bash
+├── .github/                     # Contains GitHub Actions workflows for CI/CD.
 ├── doc/                         # Documentation files, including API specs, request collections, and guides.
 ├── prisma/                      # Contains Prisma files, such as schemas and seed scripts.
 ├── src/
@@ -48,11 +51,14 @@ Before setting up the project, ensure you have the following:
 # Start the server in development mode with Nodemon
 pnpm dev
 
+# Compile TypeScript to JavaScript
+pnpm build
+
 # Start the server in production mode
 pnpm start
 
-# Compile TypeScript to JavaScript
-pnpm build
+# Run Prisma migrations and start the server in production mode (useful in Dockerfile)
+pnpm start:prod
 
 # Format the codebase using Prettier settings
 pnpm format
@@ -142,7 +148,7 @@ Create the env files for dev and prod
 
 The application requires all the environment variables in the .env.example file
 
-## Usage
+## Prisma and Database
 
 ![Prisma](https://img.shields.io/badge/Prisma-3DDC84?style=for-the-badge&logo=prisma&logoColor=white)
 
@@ -154,33 +160,29 @@ To generate the Prisma client based on the schema with package.json scripts
 pnpm prisma:generate:dev
 ```
 
-2. Migrate Schema:
+2. Migrate Schema (Dev):
 
-Use the following command to apply the schema changes to the database
+Use the following command to apply the schema changes to the dev database and generate migration files
 
 ```bash
 pnpm prisma:migrate:dev
 ```
 
-3. Start the server:
+3. Migrate Schema (Prod):
+
+After generating the migration files in development, apply them to the production database
+
+```bash
+pnpm prisma:migrate:prod
+```
+
+4. Start the server:
 
 To generate the Prisma client based on the schema with package.json scripts
 
 ```bash
 pnpm dev
 ```
-
-3. Use Prisma Studio:
-
-Prisma Studio is a visual editor for your database.  
-It allows you to view and edit the data in your database with a user-friendly interface.  
-This is particularly useful for debugging and managing your data during development.
-
-```bash
-pnpm prisma:studio:dev
-```
-
-For more granular control and advanced features, it is recommended to use a specific DB UI.
 
 ## How to Use the HTTP Request Collection
 
@@ -207,6 +209,104 @@ This user should have the `AmazonS3FullAccess` permission, or you can create a c
 3. Create Access Keys:
 
 After creating the IAM user, generate a set of access keys for programmatic access to AWS services, including S3.
+
+## GitHub Actions Environment Variables
+
+To securely manage sensitive information, we use GitHub Secrets to store environment variables.  
+The following environment variables are required for the Render deployment:
+
+- `RENDER_API_KEY`: Your Render api key.
+- `RENDER_OWNER_ID`: Your Render organization ID.
+
+You can obtain `RENDER_OWNER_ID` in your Render dashboard url.
+To obtain the `RENDER_API_KEY`, follow these steps:
+
+1. Log in to your Render account.
+2. Navigate to the Settings > API Keys
+3. Click on the "Create Token" button.
+4. Enter a name for your token and click "Create".
+
+### Adding Secrets to GitHub
+
+1. Navigate to your GitHub repository.
+2. Click on **Settings**.
+3. In the **Security** section, select **Secrets and variables**.
+4. Click **New repository secret**.
+5. Add the following secrets:
+   - `RENDER_API_KEY`
+   - `RENDER_OWNER_ID`
+   - `DATABASE_URL`
+   - `HOST`
+   - `JWT_SECRET_KEY`
+   - `COOKIE_SECRET`
+   - `GOOGLE_CLIENT_ID`
+   - `GOOGLE_CLIENT_SECRET`
+   - `AWS_BUCKET_NAME`
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+
+## GitHub Actions Workflow
+
+The GitHub Actions workflow need to be defined in a YAML file (e.g., `.github/workflows/terraform.yml`).  
+This workflow automates the deployment process by running Terraform commands when changes are pushed to the `main` branch.  
+It ensures that any infrastructure changes are automatically applied to the Render service using Terraform, keeping the deployment process smooth and consistent.
+
+Terraform within the workflow uses Docker.  
+By leveraging Docker, the setup is streamlined, avoiding conflicts with local installations.
+
+### Workflow Configuration to deploy
+
+Create a new file in your repository at `.github/workflows/terraform.yml` and add the following configuration:
+
+```yaml
+name: Deploy API to Render with Terraform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars <<EOF
+          RENDER_API_KEY = "${{ secrets.RENDER_API_KEY }}"
+          RENDER_OWNER_ID = "${{ secrets.RENDER_OWNER_ID }}"
+          DATABASE_URL = "${{ secrets.DATABASE_URL }}"
+          HOST = "${{ secrets.HOST }}"
+          JWT_SECRET_KEY = "${{ secrets.JWT_SECRET_KEY }}"
+          COOKIE_SECRET = "${{ secrets.COOKIE_SECRET }}"
+          GOOGLE_CLIENT_ID = "${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET = "${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          AWS_BUCKET_NAME = "${{ secrets.AWS_BUCKET_NAME }}"
+          AWS_ACCESS_KEY_ID = "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY = "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          EOF
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Import
+        run: terraform import render_web_service.mon-vieux-grimoire-api srv-crklp508fa8c738gmamg
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=terraform.tfvars
+
+      - name: Terraform Apply
+        run: terraform apply -var-file=terraform.tfvars -auto-approve
+
+      - name: Clean up tfvars
+        run: rm -f terraform.tfvars
+```
 
 ## Swagger api documentation
 

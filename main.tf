@@ -14,7 +14,7 @@ provider "render" {
 
 resource "render_web_service" "mon-vieux-grimoire-api" {
   name               = "mon-vieux-grimoire-api"
-  // Since its the only option you need to switch to 'free' in Render directly after hosting
+  // Since starter is the lowest option you need to switch to 'free' in Render directly after hosting
   plan               = "starter" 
   region             = "frankfurt"
 
